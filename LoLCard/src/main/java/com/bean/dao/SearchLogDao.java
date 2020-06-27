@@ -1,3 +1,6 @@
+// 추후 DB를 이용할 때 사용하는 dao입니다.
+// 어떤 DB를 구축할지에 대해 생각해봅시다.
+
 package com.bean.dao;
 
 import java.sql.Connection;

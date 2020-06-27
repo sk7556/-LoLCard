@@ -1,14 +1,11 @@
 package com.bean.controller;
 
-import static com.bean.dao.ApiKeyValue.API_KEY;
+// import static com.bean.dao.ApiKeyValue.API_KEY;
 
 import java.io.BufferedReader;	
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -27,7 +24,10 @@ import com.bean.dto.Summoner;;
 
 @Controller
 public class SearchSummoner {
-
+	
+	// API_KEY를 임의로 추가시켜봅시다.
+	static String API_KEY = "RGAPI-c9e0b983-8f51-4c08-836a-218a9b77b763";
+	
 	@RequestMapping(value="/search", method=RequestMethod.GET)
 	public String searchSummoner(Model model, HttpServletRequest httpServletRequest) {
 		VersionCheck.checkVersion();

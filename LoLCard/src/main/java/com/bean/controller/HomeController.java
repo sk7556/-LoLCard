@@ -1,7 +1,5 @@
 package com.bean.controller;
 
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -31,16 +29,16 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		String formattedDate = dateFormat.format(date);
+		
 		SearchLogDao dao = new SearchLogDao();
 		List<Summoner> list = dao.getSearchLogs();
+		
 		VersionCheck.checkVersion();
-		model.addAttribute("serverTime", formattedDate );
-		model.addAttribute("name", "이창섭");
+		
+		model.addAttribute("name", "남정식");
 		model.addAttribute("idList", list);
 		model.addAttribute("version", VersionCheck.profileiconVersion);
+		
 		return "home";
 	}
 	
