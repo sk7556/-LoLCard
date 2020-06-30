@@ -9,18 +9,19 @@
     	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.css?after">
-	<title>Noxika.GG에 오신걸 환영합니다.</title>
+	<title> 착한정식이의 홈페이지에 오신걸 환영합니다. </title>
 </head>
 <body>
 	<nav class="navbar sticky-top  navbar-dark bg-dark">
-  		<a class="navbar-brand" href="/noxikaGG" >Noxika.GG</a>
-  			<form  action="/noxikaGG/search" method="GET">
-		 		<div class="nav-embed-submit-field">
-  						<input type="text" placeholder="당신의 아이디를 검색하세요!" name="title">
-   					<button type="submit" >검색!</button>
-   				</div>
-			</form>
+  		<form  action="/search" method="GET">
+		 	<div class="nav-embed-submit-field">
+  				<input type="text" placeholder="당신의 아이디를 검색하세요!" name="title">
+   				<button type="submit" >검색!</button>
+   			</div>
+		</form>
 	</nav>
+	
+	
 	<div class="container-fluid" style="height: 100vh;">
 		<!-- logo -->
 		<div>
@@ -29,13 +30,14 @@
 	    <div class="container-fluid h-50 w-75">
 			<div class="row justify-content-center align-items-center">
 				<div class="col-12">
-					<form id="searchWindow" action="/noxikaGG/search" method="GET" onclick="clickShowing('log')">
+					<form id="searchWindow" action="/search" method="GET" onclick="clickShowing('log')">
 						<div class="embed-submit-field">
 							<input type="text" placeholder="당신의 아이디를 검색하세요!" name="title">
 							<button type="submit">검색!</button>
 						</div>
 					</form>
 				</div>
+				<!-- 아이디 리스트를 보여주기 -->
 				<div id=log class="col-12 border border-dark p-4 m-4" style="display: none">
 					<c:forEach var="List" items="${idList}" varStatus="s" end="5">
 						<img alt="랭크 엠블램" src=<c:out value="http://ddragon.leagueoflegends.com/cdn/${version}/img/profileicon/${List.getProfileIconId()}.png" /> style="max-width: 5%; ">

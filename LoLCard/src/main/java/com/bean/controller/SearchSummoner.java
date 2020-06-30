@@ -25,8 +25,8 @@ import com.bean.dto.Summoner;;
 @Controller
 public class SearchSummoner {
 	
-	// API_KEY를 임의로 추가시켜봅시다.
-	static String API_KEY = "RGAPI-c9e0b983-8f51-4c08-836a-218a9b77b763";
+	// API_KEY를 임의로 추가시켜봅시다. (현재 Developer API_KEY)
+	static String API_KEY = "RGAPI-822a1317-655a-4958-87a7-635ca4097e3a";
 	
 	@RequestMapping(value="/search", method=RequestMethod.GET)
 	public String searchSummoner(Model model, HttpServletRequest httpServletRequest) {
