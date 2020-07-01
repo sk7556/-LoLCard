@@ -34,7 +34,7 @@ public class DataMining {
 	static String API_KEY = "RGAPI-5bfa142a-5e2a-478b-9867-ddb8eb5973e1";
 	
 	@RequestMapping(value="/data", method=RequestMethod.GET)
-	public String searchData(Model model, HttpServletRequest httpServletRequest) {
+	public <JSONArray> String searchData(Model model, HttpServletRequest httpServletRequest) {
 		
 		VersionCheck.checkVersion();
 		BufferedReader br = null;
@@ -186,17 +186,19 @@ public class DataMining {
 				result = result + line;
 			}
 			// DTO가 어떤식으로 나오는지 보자
-			// System.out.println("JSON-DTO출력방식*************************" + result);
+			System.out.println("JSON-DTO출력방식*************************" + result);
 			
-			JsonParser jsonParser = new JsonParser();
-			JsonArray arr = (JsonArray) jsonParser.parse(result);
+			JsonParser jsonObj = new JsonParser();
+			JsonObject arr = (JsonObject)jsonObj.parse(result);
+			JsonArray jsonArr = (JsonArray)arr.get("matches");
+			
+			// 해냈다... jsonObj를 arr로 올리고, 거기서 matches에 해당하는걸 jsonArr로 옮겨서 거기서 파싱하기.
 			//-----------------------------------------------------JsonParse
 			
+			matchRef = new matchDTO[jsonArr.size()];
 			
-			//matchRef = new matchDTO[arr.size()];
-			/*
 			for(int i=0; i<arr.size(); i++) {
-				JsonObject k =  (JsonObject) arr.get(i); // 하나씩 가르기 .. ? 
+				JsonObject k =  (JsonObject)jsonArr.get(i); // 하나씩 가르기 .. ? 
 				
 				// matchDTO( matches, platformId, gameId, role, season, 
 				//           champion, queue, lane, timestamp ) 
@@ -210,11 +212,11 @@ public class DataMining {
 				String	role		= k.get("role").getAsString();
 				String	lane		= k.get("lane").getAsString();
 				
-				// matchRef[i] = new matchDTO(platformId, gameId, champion, 
-				//							queue, season, timestamp, role, lane);
+				System.out.print("champion" + champion);
+				
+				matchRef[i] = new matchDTO(platformId, gameId, champion, 
+											queue, season, timestamp, role, lane);
 			}
-			*/
-			//int cham = matchRef[0].getChampion();
 			
 		} catch(Exception e){
 			System.out.println(e.getMessage());
@@ -222,8 +224,7 @@ public class DataMining {
 		
 		// 매치정보리스트
 		model.addAttribute("matchRef", matchRef);
-
-		
+		// 모델로 옮기기까지 성공
 		
 		return "DataTest";
 	} // End - public searchData
