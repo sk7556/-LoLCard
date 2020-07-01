@@ -1,5 +1,6 @@
 // 추후 DB를 이용할 때 사용하는 dao입니다.
 // 어떤 DB를 구축할지에 대해 생각해봅시다.
+// SQL을 활용하지 않는다면 방문 x
 
 package com.bean.dao;
 
@@ -17,13 +18,15 @@ public class SearchLogDao {
 	private static String dbUser = "ventulus95";
 	private static String dbpasswd = "changsup95";
 	
+	// DTO를 받아 기록하는 쿼리문 DAO
 	public int addSearchLog(Summoner summoner) {
 		int insertCount = 0;
 
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
+		
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			e.printStackTrace();		
 		}
 		String sql = "INSERT INTO search (profileIconId, name, puuid, id, accountId ) VALUES ( ?, ?, ?, ?, ? ) ON DUPLICATE KEY UPDATE searchdate = VALUES(searchdate);";
 		

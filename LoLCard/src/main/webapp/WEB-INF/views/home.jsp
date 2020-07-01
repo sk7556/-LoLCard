@@ -10,9 +10,22 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.css?after">
 	<title> 착한정식이의 홈페이지에 오신걸 환영합니다. </title>
+	
+	
+	<style>
+		#logo {
+			align-text : center;
+		}
+		
+		#nav {
+			display : flex;
+			justify-content : flex-end;
+		}
+	</style>
+	
 </head>
 <body>
-	<nav class="navbar sticky-top  navbar-dark bg-dark">
+	<nav class="navbar sticky-top  navbar-dark bg-dark" id = nav>
   		<form  action="/search" method="GET">
 		 	<div class="nav-embed-submit-field">
   				<input type="text" placeholder="당신의 아이디를 검색하세요!" name="title">
@@ -25,7 +38,7 @@
 	<div class="container-fluid" style="height: 100vh;">
 		<!-- logo -->
 		<div>
-			<img id="logo" src="img/logo.png">
+			<img src="img/JOKER.png" id = "logo">
 		</div>
 	    <div class="container-fluid h-50 w-75">
 			<div class="row justify-content-center align-items-center">
