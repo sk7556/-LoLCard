@@ -8,13 +8,14 @@ public class LeagueEntrydto {
 	private String rank;
 	private String tier;
 	private int leaguePoints;
+	private boolean veteran;
+	private boolean hotStreak;
 	
 	public LeagueEntrydto() {
 		
 	}
-	
 	public LeagueEntrydto(String queueType,  int wins, int losses, String leagueId, String rank,
-			String tier, int leaguePoints) {
+			String tier, int leaguePoints, boolean veteran, boolean hotStreak) {
 		super();
 		this.queueType = queueType;
 		this.wins = wins;
@@ -23,6 +24,8 @@ public class LeagueEntrydto {
 		this.rank = rank;
 		this.tier = tier;
 		this.leaguePoints = leaguePoints;
+		this.hotStreak = hotStreak;
+		this.veteran = veteran;
 	}
 
 	public String getQueueType() {
@@ -80,15 +83,24 @@ public class LeagueEntrydto {
 	public void setLeaguePoints(int leaguePoints) {
 		this.leaguePoints = leaguePoints;
 	}
-
+	public boolean isVeteran() {
+		return veteran;
+	}
+	public void setVeteran(boolean veteran) {
+		this.veteran = veteran;
+	}
+	public boolean isHotStreak() {
+		return hotStreak;
+	}
+	public void setHotStreak(boolean hotStreak) {
+		this.hotStreak = hotStreak;
+	}
 	@Override
 	public String toString() {
-		return "LeagueEntrydto [queueType=" + queueType + ", wins=" + wins
-				+ ", losses=" + losses + ", leagueId=" + leagueId + ", rank=" + rank + ", tier=" + tier
-				+ ", leaguePoints=" + leaguePoints + "]";
+		return "LeagueEntrydto [queueType=" + queueType + ", wins=" + wins + ", losses=" + losses + ", leagueId="
+				+ leagueId + ", rank=" + rank + ", tier=" + tier + ", leaguePoints=" + leaguePoints + ", veteran="
+				+ veteran + ", hotStreak=" + hotStreak + "]";
 	}
-	
-	
 	
 	
 }

@@ -113,8 +113,11 @@ public class SearchSummoner {
 				String queueType = k.get("queueType").getAsString();
 				int leaguePoints = k.get("leaguePoints").getAsInt();
 				String leagueId = k.get("leagueId").getAsString();
+				boolean veteran = k.get("veteran").getAsBoolean();
+				boolean hotStreak = k.get("hotStreak").getAsBoolean();
 				
-				leagueInfo[i] = new LeagueEntrydto(queueType, wins, losses, leagueId, rank,tier, leaguePoints);
+				leagueInfo[i] = new LeagueEntrydto(queueType, wins, losses, leagueId, rank, 
+						 tier, leaguePoints, veteran, hotStreak);
 				urlstr = "https://kr.api.riotgames.com/lol/league/v4/leagues/"+
 						leagueInfo[i].getLeagueId()		+"?api_key="+API_KEY;
 				

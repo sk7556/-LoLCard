@@ -36,7 +36,7 @@ public class DataMining {
 	// static String API_KEY = "RGAPI-e0050527-b024-49a7-ad33-44c68415b119";
 	
 	@RequestMapping(value="/data", method=RequestMethod.GET)
-	public <JSONArray> String searchData(Model model, HttpServletRequest httpServletRequest) {
+	public String searchData(Model model, HttpServletRequest httpServletRequest) {
 		
 		VersionCheck.checkVersion();
 		BufferedReader br = null;
@@ -88,7 +88,7 @@ public class DataMining {
 		
 		//----------------------------------------------------------------
 		// LeagueV4 에서 받는 데이터
-		// 리그 인포 ( queueType, wins, losses, leagueId, rank,tier, leaguePoints ) 
+		// 리그 인포 (queueType, wins, losses, leagueId, rank,tier, leaguePoints, Bunning)
 		// 리그 네임
 		//----------------------------------------------------------------
 		
@@ -120,6 +120,8 @@ public class DataMining {
 			JsonParser jsonParser = new JsonParser();
 			JsonArray arr = (JsonArray) jsonParser.parse(result);
 			
+			System.out.println("리그인포:" + arr.toString());
+			
 			JsonObject k =  (JsonObject) arr.get(0);
 			int wins = k.get("wins").getAsInt();
 			int losses = k.get("losses").getAsInt();
@@ -128,8 +130,14 @@ public class DataMining {
 			String queueType = k.get("queueType").getAsString();
 			int leaguePoints = k.get("leaguePoints").getAsInt();
 			String leagueId = k.get("leagueId").getAsString();
+			boolean veteran = k.get("veteran").getAsBoolean();
+			boolean hotStreak = k.get("hotStreak").getAsBoolean();
 			
-			leagueInfo = new LeagueEntrydto(queueType, wins, losses, leagueId, rank,tier, leaguePoints);
+			// LeagueEntrydto(String queueType,  int wins, int losses, String leagueId, String rank,
+			// String tier, int leaguePoints, boolean veteran, boolean hotStreak)
+			
+			leagueInfo = new LeagueEntrydto(queueType, wins, losses, leagueId, rank, 
+						 tier, leaguePoints, veteran, hotStreak);
 			
 			// 리그 아이디를 info에서 얻어서 사용
 			urlstr = "https://kr.api.riotgames.com/lol/league/v4/leagues/"+

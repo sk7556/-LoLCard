@@ -31,13 +31,15 @@
 		    max-height: 300px;
 		}
 		
+		.summonerMark{
+			width:100px;
+		}
+		
 	</style>
 
 </head>
 <body>
-	<h1 align="center"> 테스트 테이블의 뷰 입니다. </h1>
-	
-	<br><br><br>
+	<h1 align="center"> 소환사 정보 도출 </h1>
 	
 	<table class = "table">
 		<thead>
@@ -45,18 +47,19 @@
 				<th> 소환사이름 </th>
 				<!-- <th> puuid </th> -->
 				<th> 소환사레벨 </th>
-				<th> 소환사인장 </th>
+				<th class = "summonerMark"> 소환사인장 </th>
 				<!--<th> 어카운트아이디 </th>-->
 				<!--<th> 아이디 </th>-->
 				<th> 리그 네임 </th>
-				<!-- 리그 인포 ( queueType, wins, losses, leagueId, rank,tier, leaguePoints ) -->
 				<th> 리그인포 : 큐타입 </th>
 				<th> 승수 </th>
 				<th> 패수 </th>
-				<th> 리그아이디 </th>
+				<!-- <th> 리그아이디 </th> -->
 				<th> 랭크 </th>
 				<th> 티어 </th>
 				<th> 리그포인트 </th>
+				<th> 베테랑여부 </th>
+				<th> 버닝여부 </th>
 			</tr>
 		</thead>
 		<tbody>
@@ -64,24 +67,27 @@
 				<td> ${summoner.name}</td>
 				<!-- 안보여줘도 되는 데이터 <th> ${summoner.puuid}</th>  -->
 				<td> ${summoner.summonerLevel}</td>
-				<td> <img src=${profileImgURL} style="max-width: 10%;"> </td>
+				<td class = "summonerMark"> <img src=${profileImgURL} style="max-width: 100%;"> </td>
 				<!--<th> ${summoner.accountId }</th>-->
 				<!--<th> ${summoner.id }</th>-->
 				<td> ${leagueName }</td>
-				<!-- 리그 인포 ( queueType, wins, losses, leagueId, rank,tier, leaguePoints ) -->
+				<!-- LeagueEntrydto(String queueType,  int wins, int losses, String leagueId, String rank,
+				String tier, int leaguePoints, boolean veteran, boolean hotStreak) -->
 				<td> ${leagueInfo.queueType }</td>
 				<td> ${leagueInfo.wins }</td>
 				<td> ${leagueInfo.losses }</td>
-				<td> ${leagueInfo.leagueId }</td>
+				<!-- <td> ${leagueInfo.leagueId }</td> -->
 				<td> ${leagueInfo.rank }</td>
 				<td> ${leagueInfo.tier }</td>
 				<td> ${leagueInfo.leaguePoints }</td>
+				<td> ${leagueInfo.veteran } </td>
+				<td> ${leagueInfo.hotStreak }</td>
 			</tr>		
 		</tbody>
 	</table>
 	
-	<hr> <br><br>
-	<h1 align="center"> 테스트 테이블 </h1>
+	<hr> <br>
+	<h1 align="center"> 유저 플레이 정보 테스트 (10판) </h1>
 	<table class = "table">
 		<thead>
 			<!--  matchRef[i] = new matchDTO(platformId, gameId, champion, 
