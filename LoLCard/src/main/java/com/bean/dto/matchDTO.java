@@ -5,6 +5,7 @@ public class matchDTO {
 	String 	platformId  ;
 	long	gameId		;
 	int		champion	;
+	String	championImg ;
 	int		queue		;
 	int		season		;
 	int		timestamp	;
@@ -15,12 +16,13 @@ public class matchDTO {
 		
 	}
 
-	public matchDTO(String platformId, long gameId, int champion, int queue, int season, int timestamp,
+	public matchDTO(String platformId, long gameId, int champion, String championImg, int queue, int season, int timestamp,
 			String role, String lane) {
 		
 		this.platformId = platformId;
 		this.gameId = gameId;
 		this.champion = champion;
+		this.championImg = championImg;
 		this.queue = queue;
 		this.season = season;
 		this.timestamp = timestamp;
@@ -50,6 +52,14 @@ public class matchDTO {
 
 	public void setChampion(int champion) {
 		this.champion = champion;
+	}
+	
+	public String getChampionImg() {
+		return championImg;
+	}
+
+	public void setChampionImg(String championImg) {
+		this.championImg = championImg;
 	}
 
 	public int getQueue() {
@@ -94,9 +104,11 @@ public class matchDTO {
 
 	@Override
 	public String toString() {
-		return "matchDTO [platformId=" + platformId + ", gameId=" + gameId + ", champion=" + champion + ", queue="
-				+ queue + ", season=" + season + ", timestamp=" + timestamp + ", role=" + role + ", lane=" + lane + "]";
+		return "matchDTO [platformId=" + platformId + ", gameId=" + gameId + ", champion=" + champion + ", championImg="
+				+ championImg + ", queue=" + queue + ", season=" + season + ", timestamp=" + timestamp + ", role="
+				+ role + ", lane=" + lane + "]";
 	}
+
 	
 	
 	

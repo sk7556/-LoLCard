@@ -14,7 +14,6 @@
 </head>
 <body>
 	<nav class="navbar sticky-top  navbar-dark bg-dark">
-  		<a class="navbar-brand" href="/noxikaGG" >Noxika.GG</a>
   			<form  action="/noxikaGG/search" method="GET">
 		 		<div class="nav-embed-submit-field">
   						<input type="text" placeholder="당신의 아이디를 검색하세요!" name="title">

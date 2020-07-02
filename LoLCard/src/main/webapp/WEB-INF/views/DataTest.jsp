@@ -18,10 +18,19 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
 	<style>
-		th {
-			text-overflow: ellipsis;
+		.ellipsis {
+			width : 30px;
+			white-space: nowrap;
+    		text-overflow: ellipsis;
 		}
-	
+		
+		#championImg {
+			width: auto; 
+			height: auto;
+		    max-width: 100px;
+		    max-height: 300px;
+		}
+		
 	</style>
 
 </head>
@@ -54,44 +63,68 @@
 			<tr>
 				<td> ${summoner.name}</td>
 				<!-- 안보여줘도 되는 데이터 <th> ${summoner.puuid}</th>  -->
-				<td style="text-overflow:ellipsis; overflow:hidden"> ${summoner.summonerLevel}</td>
+				<td> ${summoner.summonerLevel}</td>
 				<td> <img src=${profileImgURL} style="max-width: 10%;"> </td>
 				<!--<th> ${summoner.accountId }</th>-->
 				<!--<th> ${summoner.id }</th>-->
-				<th> ${leagueName }</th>
+				<td> ${leagueName }</td>
 				<!-- 리그 인포 ( queueType, wins, losses, leagueId, rank,tier, leaguePoints ) -->
-				<th> ${leagueInfo.queueType }</th>
-				<th> ${leagueInfo.wins }</th>
-				<th> ${leagueInfo.losses }</th>
-				<th> ${leagueInfo.leagueId }</th>
-				<th> ${leagueInfo.rank }</th>
-				<th> ${leagueInfo.tier }</th>
-				<th> ${leagueInfo.leaguePoints }</th>
+				<td> ${leagueInfo.queueType }</td>
+				<td> ${leagueInfo.wins }</td>
+				<td> ${leagueInfo.losses }</td>
+				<td> ${leagueInfo.leagueId }</td>
+				<td> ${leagueInfo.rank }</td>
+				<td> ${leagueInfo.tier }</td>
+				<td> ${leagueInfo.leaguePoints }</td>
 			</tr>		
 		</tbody>
 	</table>
 	
 	<hr> <br><br>
-	
 	<h1 align="center"> 테스트 테이블 </h1>
 	<table class = "table">
 		<thead>
+			<!--  matchRef[i] = new matchDTO(platformId, gameId, champion, 
+											queue, season, timestamp, role, lane); -->
 			<tr>
-				<td> 야야야 </td>
-				<td> 야야야 </td>
-				<td> 야야야 </td>
+				<th> 번호 </th>
+				<th> platformId </th>
+				<th> gameId </th>
+				<th> champion </th>
+				<th> champion face </th>
+				<th> queue </th>
+				<th> season </th>
+				<th> timestamp </th>
+				<th> role </th>
+				<th> lane </th>
 			</tr>
 		</thead>
 		<tbody>
+			<!--  matchRef[i] = new matchDTO(platformId, gameId, champion, 
+											queue, season, timestamp, role, lane); -->
+			 
+			<c:forEach items="${matchRef}" var="match" 
+						begin="0" end="9" varStatus = "status">
+			 
 			<tr>
-				<td> 오오오 </td>
-				<td> 오오오 </td>
-				<td> 오오오 </td>
-			
+				<td> ${status.count } </td>
+				<td> ${match.platformId } </td>
+				<td> ${match.gameId } </td>
+				<td> ${match.champion } </td>
+				<td > <img src = ${match.championImg } id="championImg"> </td>
+				<td> ${match.queue } </td>
+				<td> ${match.season } </td>
+				<td> ${match.timestamp } </td>
+				<td> ${match.role } </td>
+				<td> ${match.lane } </td>
 			</tr>
+			</c:forEach>
+			
+			
 		</tbody>
 		
 	</table>
+	
 	
 </body>
 	

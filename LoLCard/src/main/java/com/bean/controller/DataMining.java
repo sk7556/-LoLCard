@@ -6,8 +6,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,7 +16,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.bean.dao.SearchLogDao;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -26,12 +23,17 @@ import com.bean.config.VersionCheck;
 import com.bean.dto.LeagueEntrydto;
 import com.bean.dto.Summoner;
 import com.bean.dto.matchDTO;
+import com.bean.api.api_key;
+import com.bean.data.Champion;
 
 @Controller
 public class DataMining {
 	
 	private static final Logger logger = LoggerFactory.getLogger(DataMining.class);
-	static String API_KEY = "RGAPI-5bfa142a-5e2a-478b-9867-ddb8eb5973e1";
+	
+	String API_KEY = api_key.API_KEY;
+	
+	// static String API_KEY = "RGAPI-e0050527-b024-49a7-ad33-44c68415b119";
 	
 	@RequestMapping(value="/data", method=RequestMethod.GET)
 	public <JSONArray> String searchData(Model model, HttpServletRequest httpServletRequest) {
@@ -164,7 +166,7 @@ public class DataMining {
 		//----------------------------------------------------------------
 		// Match V4 에서 받는 데이터
 		// matchDTO( matches, platformId, gameId, role, season, 
-		//           champion, queue, lane, timestamp ) 
+		//           champion, championImg, queue, lane, timestamp ) 
 		// 활용 주소 : /lol/match/v4/matchlists/by-account/{encryptedAccountId}
 		//----------------------------------------------------------------
 			
@@ -186,18 +188,21 @@ public class DataMining {
 				result = result + line;
 			}
 			// DTO가 어떤식으로 나오는지 보자
-			System.out.println("JSON-DTO출력방식*************************" + result);
+			//System.out.println("JSON-DTO출력방식*************************" + result);
 			
 			JsonParser jsonObj = new JsonParser();
 			JsonObject arr = (JsonObject)jsonObj.parse(result);
+			
+			//System.out.println("arr의정보검출 : " + arr.toString());
+			
 			JsonArray jsonArr = (JsonArray)arr.get("matches");
 			
-			// 해냈다... jsonObj를 arr로 올리고, 거기서 matches에 해당하는걸 jsonArr로 옮겨서 거기서 파싱하기.
+			// jsonObj를 arr로 올리고, 거기서 matches에 해당하는걸 jsonArr로 옮겨서 거기서 파싱하기.
 			//-----------------------------------------------------JsonParse
 			
 			matchRef = new matchDTO[jsonArr.size()];
 			
-			for(int i=0; i<arr.size(); i++) {
+			for(int i=0; i<jsonArr.size(); i++) {
 				JsonObject k =  (JsonObject)jsonArr.get(i); // 하나씩 가르기 .. ? 
 				
 				// matchDTO( matches, platformId, gameId, role, season, 
@@ -206,15 +211,15 @@ public class DataMining {
 				String 	platformId 	= k.get("platformId").getAsString();
 				long	gameId		= k.get("gameId").getAsLong();
 				int		champion	= k.get("champion").getAsInt();
+				String  championImg = "http://ddragon.leagueoflegends.com/cdn/img/champion/loading/"
+											+ Champion.searchChampion(champion) + "_0.jpg";
 				int		queue		= k.get("queue").getAsInt();
 				int		season		= k.get("season").getAsInt();
 				int		timestamp	= k.get("timestamp").getAsInt();
 				String	role		= k.get("role").getAsString();
 				String	lane		= k.get("lane").getAsString();
 				
-				System.out.print("champion" + champion);
-				
-				matchRef[i] = new matchDTO(platformId, gameId, champion, 
+				matchRef[i] = new matchDTO(platformId, gameId, champion, championImg,
 											queue, season, timestamp, role, lane);
 			}
 			
@@ -224,9 +229,19 @@ public class DataMining {
 		
 		// 매치정보리스트
 		model.addAttribute("matchRef", matchRef);
-		// 모델로 옮기기까지 성공
+		//System.out.println("최근매치플레이한플랫폼id : " + matchRef[0].getPlatformId());
+		
+		//----------------------------------------------------------------
+		// Match V4 에서 받는 데이터
+		// matchDTO( matches, platformId, gameId, role, season, 
+		//           champion, queue, lane, timestamp ) 
+		// 활용 주소 : /lol/match/v4/matchlists/by-account/{encryptedAccountId}
+		//----------------------------------------------------------------
+		
 		
 		return "DataTest";
 	} // End - public searchData
+
+	
 	
 }

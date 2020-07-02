@@ -20,6 +20,7 @@ import com.bean.dao.SearchLogDao;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.bean.api.api_key;
 import com.bean.config.VersionCheck;
 import com.bean.dto.LeagueEntrydto;
 import com.bean.dto.Summoner;
@@ -29,8 +30,8 @@ public class SearchSummoner {
 	
 	private static final Logger logger = LoggerFactory.getLogger(SearchSummoner.class);
 	
-	// API_KEY를 임의로 추가시켜봅시다. (현재 Developer API_KEY)
-	static String API_KEY = "RGAPI-5bfa142a-5e2a-478b-9867-ddb8eb5973e1";
+	// API_KEY를 추가시켜봅시다. (현재 Developer API_KEY)
+	String API_KEY = api_key.API_KEY;
 	
 	@RequestMapping(value="/search", method=RequestMethod.GET)
 	public String searchSummoner(Model model, HttpServletRequest httpServletRequest) {

@@ -13,20 +13,32 @@
 	
 	
 	<style>
-		#logo {
+		.logo {
 			align-text : center;
+			width : 20%;
 		}
 		
 		#nav {
 			display : flex;
-			justify-content : flex-end;
+			justify-content : space-between;
 		}
+		
+		#logoDiv {
+			display : flex;
+			justify-content : space-between;
+		}
+		
+		#h22 {
+			color : white;
+		}
+		
 	</style>
 	
 </head>
 <body>
-	<nav class="navbar sticky-top  navbar-dark bg-dark" id = nav>
-  		<form  action="/search" method="GET">
+	<nav class="navbar sticky-top navbar-dark bg-dark" id = nav>
+  		<h2 id = "h22"> Borrowed Code  </h2>
+  		<form  action="/search" method="GET">		 	
 		 	<div class="nav-embed-submit-field">
   				<input type="text" placeholder="당신의 아이디를 검색하세요!" name="title">
    				<button type="submit" >검색!</button>
@@ -37,12 +49,31 @@
 	
 	<div class="container-fluid" style="height: 100vh;">
 		<!-- logo -->
-		<div>
-			<img src="img/JOKER.png" id = "logo">
+		<div id = "logoDiv">
+			<img src="img/JOKER.png" class = "logo">
+			<img src="img/JOKER.png" class = "logo">
 		</div>
-	    <div class="container-fluid h-50 w-75">
+	    
+	    <!-- DATALIST 검색 -->
+		<div class="container-fluid h-40 w-100">
 			<div class="row justify-content-center align-items-center">
-				<div class="col-12">
+				<div class="col-5">
+					<h3> 아이디를 이용한 DATALIST 출력 </h3>
+					<form id="searchWindow" action="/data" method="GET">
+						<div class="embed-submit-field">
+							<input type="text" placeholder="당신의 아이디를 검색하세요!" name="title">
+							<button type="submit">검색!</button>
+						</div>
+					</form>
+				</div>				
+			</div>
+		</div>
+		<!-- END DATALIST 검색 --><br><br>		
+	    <!-- ID를 이용한 상태검색 -->
+	    <div class="container-fluid h-40 w-100">
+			<div class="row justify-content-center align-items-center">
+				<div class="col-5">
+					<h3> 아이디를 이용한 상태 출력 </h3>
 					<form id="searchWindow" action="/search" method="GET" onclick="clickShowing('log')">
 						<div class="embed-submit-field">
 							<input type="text" placeholder="당신의 아이디를 검색하세요!" name="title">
@@ -59,24 +90,13 @@
 				</div>
 			</div>
 		</div>
-	</div>
-	
-	 <!-- Footer -->
-	<footer class="bg-dark" style="color: white;" >
-	  <div class="container">
-	  	<div class="row"> 
-	  		  <!-- Copyright -->
-	  		<div class="col-sm-12" style="text-align: center; padding:10px; ">
-	  			© 2019 Copyright: <a href="/noxikaGG"> NOXIKA.GG</a>
-	  		</div>
-	  	</div>
-      </div>
-	</footer>
+		<!-- END 상태검색 -->
+	</div>	 
     
     <script>
 		function idRedirect(name){
 			var replace = name.replace( /(\s*)/g, "");
-		 	document.location.href="/noxikaGG/search?title="+replace; // 선택한 페이지로 
+		 	document.location.href="/search?title="+replace; // 선택한 페이지로 
 		};
 		
 		function clickShowing(id){

@@ -17,6 +17,9 @@ public class VersionCheck {
 	public static String stickerVersion = null;
 	public static String itemVersion = null;
 	
+	// 버전 정보를 가지고 있는 Json 
+	// urlstr에서 json리스트를 갱신해주고 있기 때문에  특별히 버전 수정을 안해도 되려나.
+	
 	public static void checkVersion() {
 		BufferedReader br = null;
 		try{            
