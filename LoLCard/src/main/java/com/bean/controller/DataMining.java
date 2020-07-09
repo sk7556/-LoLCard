@@ -20,11 +20,13 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.bean.config.VersionCheck;
+import com.bean.dto.ChampionMasteryDTO;
 import com.bean.dto.LeagueEntrydto;
 import com.bean.dto.Summoner;
 import com.bean.dto.matchDTO;
 import com.bean.api.api_key;
 import com.bean.data.Champion;
+import com.bean.data.ConvertUnixTime;
 
 @Controller
 public class DataMining {
@@ -32,8 +34,6 @@ public class DataMining {
 	private static final Logger logger = LoggerFactory.getLogger(DataMining.class);
 	
 	String API_KEY = api_key.API_KEY;
-	
-	// static String API_KEY = "RGAPI-e0050527-b024-49a7-ad33-44c68415b119";
 	
 	@RequestMapping(value="/data", method=RequestMethod.GET)
 	public String searchData(Model model, HttpServletRequest httpServletRequest) {
@@ -62,7 +62,7 @@ public class DataMining {
 			String line;
 			while((line = br.readLine()) != null) { // 그 받아온 문자열을 계속 br에서 줄단위로 받고 출력하겠다.
 				result = result + line;
-			}
+			} // End while
 			JsonParser jsonParser = new JsonParser();
 			JsonObject k = (JsonObject) jsonParser.parse(result);
 			
@@ -120,7 +120,7 @@ public class DataMining {
 			JsonParser jsonParser = new JsonParser();
 			JsonArray arr = (JsonArray) jsonParser.parse(result);
 			
-			System.out.println("리그인포:" + arr.toString());
+			//System.out.println("리그인포:" + arr.toString());
 			
 			JsonObject k =  (JsonObject) arr.get(0);
 			int wins = k.get("wins").getAsInt();
@@ -180,7 +180,7 @@ public class DataMining {
 			
 		matchDTO[] matchRef = null;
 		try {
-			String urlstr = "https://kr.api.riotgames.com//lol/match/v4/matchlists/by-account/"
+			String urlstr = "https://kr.api.riotgames.com/lol/match/v4/matchlists/by-account/"
 							 +temp.getAccountId()+"?api_key="+API_KEY;
 			
 			//-----------------------------------------------------JsonParse
@@ -204,6 +204,8 @@ public class DataMining {
 			//System.out.println("arr의정보검출 : " + arr.toString());
 			
 			JsonArray jsonArr = (JsonArray)arr.get("matches");
+			
+			//System.out.println("jsonARR의 정보검출" + jsonArr.toString());
 			
 			// jsonObj를 arr로 올리고, 거기서 matches에 해당하는걸 jsonArr로 옮겨서 거기서 파싱하기.
 			//-----------------------------------------------------JsonParse
@@ -237,15 +239,86 @@ public class DataMining {
 		
 		// 매치정보리스트
 		model.addAttribute("matchRef", matchRef);
-		//System.out.println("최근매치플레이한플랫폼id : " + matchRef[0].getPlatformId());
+		System.out.println("최근매치플레이한플랫폼id : " + matchRef[0].toString());
 		
 		//----------------------------------------------------------------
-		// Match V4 에서 받는 데이터
-		// matchDTO( matches, platformId, gameId, role, season, 
-		//           champion, queue, lane, timestamp ) 
-		// 활용 주소 : /lol/match/v4/matchlists/by-account/{encryptedAccountId}
+		// Champion-MasteryV4에서 받는 데이터
+		//  List[ChampionMasteryDTO]
+		//  championPointsUntilNextLevel	long	
+		//	chestGranted	boolean	
+		//	championId	long	
+		//	lastPlayTime	long	
+		//	championLevel	int	
+		//	summonerId	string	
+		//	championPoints	int	
+		//	championPointsSinceLastLevel	long	
+		//	tokensEarned	int	
+		//  활용 주소 : /lol/champion-mastery/v4/champion-masteries/by-summoner/{encryptedSummonerId}
 		//----------------------------------------------------------------
+				
+		ChampionMasteryDTO[] ChampionPlayList = null;		
+		try {
+			String urlstr = "https://kr.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/"
+							 +temp.getId()+"?api_key="+API_KEY;
+			
+			//-----------------------------------------------------JsonParse
+			URL url = new URL(urlstr);
+			HttpURLConnection urlconnection = (HttpURLConnection) url.openConnection();
+			urlconnection.setRequestMethod("GET");
+			br = new BufferedReader(new InputStreamReader(urlconnection.getInputStream(),"UTF-8")); // 여기에 문자열을 받아와라.
+			
+			String result = "";
+			String line;
+			
+			while((line = br.readLine()) != null) { // 그 받아온 문자열을 계속 br에서 줄단위로 받고 출력하겠다.
+				result = result + line;
+			}
+			// DTO가 어떤식으로 나오는지 보자
+			//System.out.println("ChampionMasteryDTO출력방식*************************" + result);
+			
+			JsonParser jsonObj = new JsonParser();
+			// Json파일을 배열 형식으로 전환
+			JsonArray jsonArr = (JsonArray)jsonObj.parse(result);
+			
+			//System.out.println("ChampionArray의정보검출 : " + jsonArr.toString());
+						
+			// jsonObj를 arr로 올리고, 거기서 matches에 해당하는걸 jsonArr로 옮겨서 거기서 파싱하기.
+			//-----------------------------------------------------JsonParse
+			
+			// jsonArr 크기의 배열을 미리 만들어둔다.
+			ChampionPlayList = new ChampionMasteryDTO[jsonArr.size()];
+			
+			for(int i=0; i<jsonArr.size(); i++) {
+				JsonObject k =  (JsonObject)jsonArr.get(i); // 하나씩 가르기 .. ? 
+				
+				long 	championPointsUntilNextLevel = k.get("championPointsUntilNextLevel").getAsLong();
+				boolean	chestGranted = k.get("chestGranted").getAsBoolean();
+				long	championId = k.get("championId").getAsLong();
+				String	lastPlayTime = ConvertUnixTime.convertDate(k.get("lastPlayTime").getAsLong()); 
+				
+				int		championLevel = k.get("championLevel").getAsInt();
+				String	summonerId = k.get("summonerId").getAsString();
+				int		championPoints = k.get("championPoints").getAsInt(); 
+				long	championPointsSinceLastLevel = k.get("championPointsSinceLastLevel").getAsLong();
+				int		tokensEarned = k.get("tokensEarned").getAsInt();
+				String	championName = Champion.searchChampion((int)championId);
+				String	championImg  = "http://ddragon.leagueoflegends.com/cdn/10.13.1/img/champion/"
+						+ championName + ".png";
+				
+				ChampionPlayList[i] = new ChampionMasteryDTO
+						(championPointsUntilNextLevel, chestGranted, 
+						championId, lastPlayTime, championLevel, 
+						summonerId, championPoints, championPointsSinceLastLevel,
+						tokensEarned, championName, championImg);
+			}
+			
+		} catch(Exception e){
+			System.out.println(e.getMessage());
+		}
 		
+		// 챔피언 정보 리스트
+		model.addAttribute("ChampionList", ChampionPlayList);
+		//System.out.println("지금테스트" + ChampionPlayList[0].getChampionImg());
 		
 		return "DataTest";
 	} // End - public searchData

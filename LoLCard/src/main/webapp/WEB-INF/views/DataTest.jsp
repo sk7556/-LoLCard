@@ -49,7 +49,7 @@
 				<th> 소환사레벨 </th>
 				<th class = "summonerMark"> 소환사인장 </th>
 				<!--<th> 어카운트아이디 </th>-->
-				<!--<th> 아이디 </th>-->
+				<th> summonerId </th>
 				<th> 리그 네임 </th>
 				<th> 리그인포 : 큐타입 </th>
 				<th> 승수 </th>
@@ -69,7 +69,7 @@
 				<td> ${summoner.summonerLevel}</td>
 				<td class = "summonerMark"> <img src=${profileImgURL} style="max-width: 100%;"> </td>
 				<!--<th> ${summoner.accountId }</th>-->
-				<!--<th> ${summoner.id }</th>-->
+				<th> ${summoner.id }</th>
 				<td> ${leagueName }</td>
 				<!-- LeagueEntrydto(String queueType,  int wins, int losses, String leagueId, String rank,
 				String tier, int leaguePoints, boolean veteran, boolean hotStreak) -->
@@ -126,6 +126,58 @@
 			</tr>
 			</c:forEach>
 			
+			
+		</tbody>
+		
+	</table>
+	
+	<hr> <br>
+	<h1 align="center"> 유저 플레이 챔피언 리스트 (챔피언포인트 순 10명) </h1>
+	<table class = "table">
+		<thead>
+			<!--  ChampionPlayList[i] = new ChampionMasteryDTO
+						(championPointsUntilNextLevel, chestGranted, 
+						championId, lastPlayTime, championLevel, 
+						summonerId, championPoints, championPointsSinceLastLevel,
+						tokensEarned); -->
+			<tr>
+				<th> 번호  </th>
+				<th> 다음레벨까지챔피언경험치 </th>
+				<th> chestGranted </th>
+				<th> 챔피언명 </th>
+				<th> 사진  </th>
+				<th> 최근 플레이타임 </th>
+				<th> 챔피언레벨 </th>
+				<!--<th> summonerId </th> -->
+				<th> 챔피언숙련도 </th>
+				<!-- <th> 현재레벨의경험치 </th>  -->
+				<!-- <th> tokensEarned </th>  -->
+			</tr>
+		</thead>
+		<tbody>
+			<!--  ChampionPlayList[i] = new ChampionMasteryDTO
+						(championPointsUntilNextLevel, chestGranted, 
+						championId, lastPlayTime, championLevel, 
+						summonerId, championPoints, championPointsSinceLastLevel,
+						tokensEarned); -->
+			 
+			<c:forEach items="${ChampionList}" var="Champion" 
+						begin="0" end="9" varStatus = "status">
+			<tr>
+				<td> ${status.count } </td>
+				<td> ${Champion.championPointsUntilNextLevel } </td>
+				<td> ${Champion.chestGranted } </td>
+				<td> ${Champion.championName } </td>
+				<td> <img src = ${Champion.championImg }></td>
+				<td> ${Champion.lastPlayTime } </td>
+				<td> ${Champion.championLevel } </td>
+				<!-- <td> ${Champion.summonerId } </td> -->
+				<td> ${Champion.championPoints } </td>
+				<!-- <td> ${Champion.championPointsSinceLastLevel } </td>  -->
+				<!-- <td> ${Champion.tokensEarned } </td>  -->
+			</tr>
+			
+			</c:forEach>
 			
 		</tbody>
 		

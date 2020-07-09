@@ -1,8 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
+	
+	<!-- MySQL DataSource 설정 -->
+	<!-- DataSource는 MySQL과 연결을 담당한다. -->
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
+		<property name="url" value="jdbc:log4jdbc:mysql://127.0.0.1:3306/lolcard_db?useSSL=false&amp;serverTimezone=UTC"></property>
+		<property name="username" value="sk7556"></property>
+		<property name="password" value="simmani"></property>
+	</bean>
+
+	<!-- MyBatis SqlSessionFactoryBean 설정 -->
+	<!-- MyBatis SqlSessionFactoryBean 에서는 MyBatis 설정 기능을 활용하도록 설정파일을 읽어오는 부분과
+	     SQL 문장을 작성해둘 mapper.xml 파일을 읽어오는 부분이 있다. -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="configLocation" value="classpath:/mybatis-config.xml"></property>
+		<property name="mapperLocations" value="classpath:mapper/**/*Mapper.xml"></property>
+	</bean>
+	
+	<!-- SqlSessionTemplate -->
+	<!-- SqlSessionTemplate 는 기본적인 트랜젝션 관리나 쓰레드 처리의 안정성 등을 보장하고,
+	     DB의 연결과 종료를 관리하는 부분이다.
+	     SqlSessionTemplate을 등록해두면 개발자가 직접 트랜젝션 관리나 DB와의 연결, 종료를 
+	     해야하는 작업을 줄여줄 수 있다. -->
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
+		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
+	</bean> 
+	
+	
+	<!-- Bean 등록 -->
+	<context:component-scan base-package="com.bean.dao"></context:component-scan>
+	<context:component-scan base-package="com.bean.service"></context:component-scan>
+		
 		
 </beans>
