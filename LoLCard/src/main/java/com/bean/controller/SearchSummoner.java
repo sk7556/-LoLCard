@@ -16,7 +16,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.bean.dao.SearchLogDao;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -71,9 +70,6 @@ public class SearchSummoner {
 		} catch(Exception e){
 			System.out.println(e.getMessage());
 		}
-		// SQL에 자료를 기록하기 위함
-		SearchLogDao dao = new SearchLogDao();
-		dao.addSearchLog(temp);
 		
 		String[] leagueName = null;
 		try{

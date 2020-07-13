@@ -1,8 +1,36 @@
 package com.bean.dto;
 
-public class matchInfoDTO {
+public class matchResultDTO {
 	
-	// matchPlayInfoDTO --> matchInfoDTO(순위)
+	// From ParticipantDTO / stats
+	// ParticipantTimelineDto 시간별 유저의 딜 -골드 -받은딜 등
+	// 플레이어와 같은 championId를 가진 플레이어를 찾는다. ( 
+	// 정보 참조 : https://developer.riotgames.com/apis#match-v4/GET_getMatch
+	
+	private int		participantId;
+	private int		championId;
+	private int		spell1Id;
+	private int		spell2Id;
+	
+	// participantDTO 에서 stats 안의 내용을 추출
+	// 개인정보이므로 유저만 추출하자.
+	private int		item0;
+	private int 	item1;
+	private int 	item2;
+	private int 	item3;
+	private int 	item4;
+	private int 	item5;
+	private int		item6;
+	
+	// 룬
+	private int		perk0;	
+	private int		perk1;
+	private int		perk2;	
+	private int		perk3;	
+	
+	// 보조룬
+	private int		perk4;	
+	private int		perk5;	
 	
 	// 플레이데이터  - 팀원 비교 순위 정보
 	private int		kills;
@@ -45,12 +73,10 @@ public class matchInfoDTO {
 	private int		visionWardsBoughtInGame;
 	private int		wardsPlaced;
 	private int		wardsKilled;
-	private int		firstBloodKill;// 퍼블이 있을 경우 1점 없을 경우 5점
-	private int		firstTowerKill;// 포탑 퍼블이 있을 경우 1점 없을 경우 5점
+	private int		firstBloodKill;// 퍼블이 있을 경우 5점 없을 경우 0점
+	private int		firstTowerKill;// 포탑 퍼블이 있을 경우 5점 없을 경우 0점
 	
-	public matchInfoDTO() {}
-	
-	public matchInfoDTO(
+	public matchResultDTO(
 		int participantId, int championId, int spell1Id, int spell2Id,
 		int item0, int item1, int item2, int item3, int item4, int item5, int item6,
 		int perk0, int perk1, int perk2, int perk3, int perk4, int perk5,
@@ -66,7 +92,24 @@ public class matchInfoDTO {
 		int	neutralMinionsKilledEnemyJungle, int champLevel, int visionWardsBoughtInGame,
 		int	wardsPlaced, int wardsKilled, int firstBloodKill, int firstTowerKill) {
 		
-		super();		
+		super();
+		this.participantId = participantId;
+		this.championId = championId;
+		this.spell1Id = spell1Id;
+		this.spell2Id = spell2Id;
+		this.item0 = item0;
+		this.item1 = item1;
+		this.item2 = item2;
+		this.item3 = item3;
+		this.item4 = item4;
+		this.item5 = item5;
+		this.item6 = item6;
+		this.perk0 = perk0;		
+		this.perk1 = perk1;		
+		this.perk2 = perk2;		
+		this.perk3 = perk3;		
+		this.perk4 = perk4;		
+		this.perk5 = perk5;		
 		
 		this.kills = kills;
 		this.deaths = deaths;
@@ -110,6 +153,142 @@ public class matchInfoDTO {
 		this.wardsKilled = wardsKilled;
 		this.firstBloodKill = firstBloodKill; // 퍼블이 있을 경우 5점 없을 경우 0점
 		this.firstTowerKill = firstTowerKill; // 포탑 퍼블이 있을 경우 5점 없을 경우 0점
+	}
+
+	public int getParticipantId() {
+		return participantId;
+	}
+
+	public void setParticipantId(int participantId) {
+		this.participantId = participantId;
+	}
+
+	public int getChampionId() {
+		return championId;
+	}
+
+	public void setChampionId(int championId) {
+		this.championId = championId;
+	}
+
+	public int getSpell1Id() {
+		return spell1Id;
+	}
+
+	public void setSpell1Id(int spell1Id) {
+		this.spell1Id = spell1Id;
+	}
+
+	public int getSpell2Id() {
+		return spell2Id;
+	}
+
+	public void setSpell2Id(int spell2Id) {
+		this.spell2Id = spell2Id;
+	}
+
+	public int getItem0() {
+		return item0;
+	}
+
+	public void setItem0(int item0) {
+		this.item0 = item0;
+	}
+
+	public int getItem1() {
+		return item1;
+	}
+
+	public void setItem1(int item1) {
+		this.item1 = item1;
+	}
+
+	public int getItem2() {
+		return item2;
+	}
+
+	public void setItem2(int item2) {
+		this.item2 = item2;
+	}
+
+	public int getItem3() {
+		return item3;
+	}
+
+	public void setItem3(int item3) {
+		this.item3 = item3;
+	}
+
+	public int getItem4() {
+		return item4;
+	}
+
+	public void setItem4(int item4) {
+		this.item4 = item4;
+	}
+
+	public int getItem5() {
+		return item5;
+	}
+
+	public void setItem5(int item5) {
+		this.item5 = item5;
+	}
+
+	public int getItem6() {
+		return item6;
+	}
+
+	public void setItem6(int item6) {
+		this.item6 = item6;
+	}
+
+	public int getPerk0() {
+		return perk0;
+	}
+
+	public void setPerk0(int perk0) {
+		this.perk0 = perk0;
+	}
+
+	public int getPerk1() {
+		return perk1;
+	}
+
+	public void setPerk1(int perk1) {
+		this.perk1 = perk1;
+	}
+
+	public int getPerk2() {
+		return perk2;
+	}
+
+	public void setPerk2(int perk2) {
+		this.perk2 = perk2;
+	}
+
+	public int getPerk3() {
+		return perk3;
+	}
+
+	public void setPerk3(int perk3) {
+		this.perk3 = perk3;
+	}
+
+	public int getPerk4() {
+		return perk4;
+	}
+
+	public void setPerk4(int perk4) {
+		this.perk4 = perk4;
+	}
+
+	public int getPerk5() {
+		return perk5;
+	}
+
+	public void setPerk5(int perk5) {
+		this.perk5 = perk5;
 	}
 
 	public int getKills() {
@@ -450,7 +629,10 @@ public class matchInfoDTO {
 
 	@Override
 	public String toString() {
-		return "matchInfoDTO [kills="
+		return "matchInfoDTO [participantId=" + participantId + ", championId=" + championId + ", spell1Id=" + spell1Id
+				+ ", spell2Id=" + spell2Id + ", item0=" + item0 + ", item1=" + item1 + ", item2=" + item2 + ", item3="
+				+ item3 + ", item4=" + item4 + ", item5=" + item5 + ", item6=" + item6 + ", perk0=" + perk0 + ", perk1="
+				+ perk1 + ", perk2=" + perk2 + ", perk3=" + perk3 + ", perk4=" + perk4 + ", perk5=" + perk5 + ", kills="
 				+ kills + ", deaths=" + deaths + ", assists=" + assists + ", largestKillingSpree=" + largestKillingSpree
 				+ ", largestMultiKill=" + largestMultiKill + ", killingSprees=" + killingSprees
 				+ ", longestTimeSpentLiving=" + longestTimeSpentLiving + ", doubleKills=" + doubleKills

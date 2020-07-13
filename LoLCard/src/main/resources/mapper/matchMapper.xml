@@ -104,6 +104,56 @@
 			)  ON DUPLICATE KEY UPDATE primaryCode = VALUES(primaryCode);
 	</insert>
 	
+	<select id = "selectRanking" parameterType = "hashMap" resultType = "matchInfoDTO">
+	
+	select (select count(*) from matchpartydata where kills > b.kills and matchId = #{matchId} ) as kills,
+		   (select count(*) from matchpartydata where deaths > b.deaths and matchId = #{matchId} ) as deaths,
+		   (select count(*) from matchpartydata where assists > b.assists and matchId = #{matchId} ) as assists,
+		   (select count(*) from matchpartydata where largestKillingSpree > b.largestKillingSpree and matchId = #{matchId} ) as largestKillingSpree,
+		   (select count(*) from matchpartydata where largestMultiKill > b.largestMultiKill and matchId = #{matchId} ) as largestMultiKill,
+		   (select count(*) from matchpartydata where killingSprees > b.killingSprees and matchId = #{matchId} ) as killingSprees,
+		   (select count(*) from matchpartydata where longestTimeSpentLiving > b.longestTimeSpentLiving and matchId = #{matchId} ) as longestTimeSpentLiving,
+		   (select count(*) from matchpartydata where doubleKills > b.doubleKills and matchId = #{matchId} ) as doubleKills,
+		   (select count(*) from matchpartydata where tripleKills > b.tripleKills and matchId = #{matchId} ) as tripleKills,
+		   (select count(*) from matchpartydata where quadraKills > b.quadraKills and matchId = #{matchId} ) as quadraKills,
+		   (select count(*) from matchpartydata where pentaKills > b.pentaKills and matchId = #{matchId} ) as pentaKills,
+		   (select count(*) from matchpartydata where totalDamageDealt > b.totalDamageDealt and matchId = #{matchId} ) as totalDamageDealt,
+		   (select count(*) from matchpartydata where magicDamageDealt > b.magicDamageDealt and matchId = #{matchId} ) as magicDamageDealt,
+		   (select count(*) from matchpartydata where physicalDamageDealt > b.physicalDamageDealt and matchId = #{matchId} ) as physicalDamageDealt,
+		   (select count(*) from matchpartydata where trueDamageDealt > b.trueDamageDealt and matchId = #{matchId} ) as trueDamageDealt,
+		   (select count(*) from matchpartydata where largestCriticalStrike > b.largestCriticalStrike and matchId = #{matchId} ) as largestCriticalStrike,
+		   (select count(*) from matchpartydata where totalDamageDealtToChampions > b.totalDamageDealtToChampions and matchId = #{matchId} ) as totalDamageDealtToChampions,
+		   (select count(*) from matchpartydata where magicDamageDealtToChampions > b.magicDamageDealtToChampions and matchId = #{matchId} ) as magicDamageDealtToChampions,
+		   (select count(*) from matchpartydata where physicalDamageDealtToChampions > b.physicalDamageDealtToChampions and matchId = #{matchId} ) as physicalDamageDealtToChampions,
+		   (select count(*) from matchpartydata where trueDamageDealtToChampions > b.trueDamageDealtToChampions and matchId = #{matchId} ) as trueDamageDealtToChampions,
+		   (select count(*) from matchpartydata where totalHeal > b.totalHeal and matchId = #{matchId} ) as totalHeal,
+		   (select count(*) from matchpartydata where totalUnitsHealed > b.totalUnitsHealed and matchId = #{matchId} ) as totalUnitsHealed,
+		   (select count(*) from matchpartydata where damageSelfMitigated > b.damageSelfMitigated and matchId = #{matchId} ) as damageSelfMitigated,
+		   (select count(*) from matchpartydata where damageDealtToObjectives > b.damageDealtToObjectives and matchId = #{matchId} ) as damageDealtToObjectives,
+		   (select count(*) from matchpartydata where damageDealtToTurrets > b.damageDealtToTurrets and matchId = #{matchId} ) as damageDealtToTurrets,
+		   (select count(*) from matchpartydata where visionScore > b.visionScore and matchId = #{matchId} ) as visionScore,
+		   (select count(*) from matchpartydata where timeCCingOthers > b.timeCCingOthers and matchId = #{matchId} ) as timeCCingOthers,
+		   (select count(*) from matchpartydata where totalDamageTaken > b.totalDamageTaken and matchId = #{matchId} ) as totalDamageTaken,
+		   (select count(*) from matchpartydata where magicalDamageTaken > b.magicalDamageTaken and matchId = #{matchId} ) as magicalDamageTaken,
+		   (select count(*) from matchpartydata where physicalDamageTaken > b.physicalDamageTaken and matchId = #{matchId} ) as physicalDamageTaken,
+		   (select count(*) from matchpartydata where trueDamageTaken > b.trueDamageTaken and matchId = #{matchId} ) as trueDamageTaken,
+		   (select count(*) from matchpartydata where goldEarned > b.goldEarned and matchId = #{matchId} ) as goldEarned,
+		   (select count(*) from matchpartydata where turretKills > b.turretKills and matchId = #{matchId} ) as turretKills,
+		   (select count(*) from matchpartydata where inhibitorKills > b.inhibitorKills and matchId = #{matchId} ) as inhibitorKills,
+		   (select count(*) from matchpartydata where totalMinionsKilled > b.totalMinionsKilled and matchId = #{matchId} ) as totalMinionsKilled,
+		   (select count(*) from matchpartydata where neutralMinionsKilledEnemyJungle > b.neutralMinionsKilledEnemyJungle and matchId = #{matchId} ) as neutralMinionsKilledEnemyJungle,
+		   (select count(*) from matchpartydata where champLevel > b.champLevel and matchId = #{matchId} ) as champLevel,
+		   (select count(*) from matchpartydata where visionWardsBoughtInGame > b.visionWardsBoughtInGame and matchId = #{matchId} ) as visionWardsBoughtInGame,
+		   (select count(*) from matchpartydata where wardsPlaced > b.wardsPlaced and matchId = #{matchId} ) as wardsPlaced,
+		   (select count(*) from matchpartydata where wardsKilled > b.wardsKilled and matchId = #{matchId} ) as wardsKilled,
+		   (select 5-5*firstBloodKill) as firstBloodKill,
+		   (select 5-5*firstTowerKill) as firstTowerKill
+	
+	from matchpartydata as b 
+	where championId = #{championId} and matchId = #{matchId} and myPlayData=1
+	
+	</select>
+		
 </mapper>
   
   

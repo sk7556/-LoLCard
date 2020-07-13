@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.bean.config.VersionCheck;
-import com.bean.dao.SearchLogDao;
 import com.bean.dto.Summoner;
 
 
@@ -30,13 +29,9 @@ public class HomeController {
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
-		SearchLogDao dao = new SearchLogDao();
-		List<Summoner> list = dao.getSearchLogs();
-		
 		VersionCheck.checkVersion();
 		
 		model.addAttribute("name", "남정식");
-		model.addAttribute("idList", list);
 		model.addAttribute("version", VersionCheck.profileiconVersion);
 		
 		return "home";
