@@ -26,14 +26,12 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+// 챔피언의 데이터를 받아 매치 여러판의 데이터를 분석하는 컨트롤러
 @Controller
 public class MatchController {
 		
 	@Inject
 	private matchService service;
-	
-	@Inject
-	private champResultDTO ChampDTO;
 	
 	String API_KEY = api_key.API_KEY;
 	
@@ -80,6 +78,7 @@ public class MatchController {
 		matchInfoDTO MID = null;
 		int rankData[] = new int[43];
 		int rankResult[] = new int[10];	// 결과가 되는 변수값 3개 지정
+		champResultDTO ChampDTO = null;
 		
 		//--------------------------------------------------------
 		// 최대 30매치의 순위 점수를 합산하기 위한 변수 마련
@@ -172,10 +171,34 @@ public class MatchController {
 		 		largestMultiKill 	+= MID.getLargestMultiKill();
 		 		killingSprees 		+= MID.getKillingSprees();
 		 		longestTimeSpentLiving += MID.getLongestTimeSpentLiving();
-		 		doubleKills			+= MID.getDoubleKills();
-		 		tripleKills			+= MID.getTripleKills();	
-		 		quadraKills			+= MID.getQuadraKills();
-		 		pentaKills			+= MID.getPentaKills();
+		 		
+		 		// 더블킬-트리플킬-쿼드라킬-펜타킬은 등장하지 않는 경우가 발생할 수 있으므로 모두 0등이 될 수 있다. 
+		 		// 10명 모두 0등일 경우 모두 10점을 부여하여 하지 않는 것으로 간주한다.
+		 		if(MID.getDoubleKills() != 0)
+		 		{
+		 			doubleKills			+= MID.getDoubleKills();
+		 		} else {
+		 			doubleKills			+= 10; 
+		 		}
+		 		if(MID.getTripleKills() != 0)
+		 		{
+		 			tripleKills			+= MID.getTripleKills();
+		 		} else {
+		 			tripleKills			+= 10; 
+		 		}
+		 		if(MID.getQuadraKills() != 0)
+		 		{
+		 			quadraKills			+= MID.getQuadraKills();
+		 		} else {
+		 			quadraKills			+= 10; 
+		 		}
+		 		if(MID.getPentaKills() != 0)
+		 		{
+		 			pentaKills			+= MID.getPentaKills();
+		 		} else {
+		 			pentaKills			+= 10; 
+		 		}
+		 		
 		 		totalDamageDealt	+= MID.getTotalDamageDealt();
 		 		magicDamageDealt	+= MID.getMagicDamageDealt();	
 		 		physicalDamageDealt	+= MID.getPhysicalDamageDealt();
@@ -207,8 +230,6 @@ public class MatchController {
 		 		wardsKilled += MID.getWardsKilled();
 		 		firstBloodKill += MID.getFirstBloodKill();// 퍼블이 있을 경우 1점 없을 경우 5점
 		 		firstTowerKill += MID.getFirstTowerKill();// 포탑 퍼블이 있을 경우 1점 없을 경우 5점
-		 		
-		 		System.out.println("****킬 수 : " + kills);
 			
 		 	} // End For
 			
@@ -255,12 +276,9 @@ public class MatchController {
 			 rankData[39] =		wardsPlaced;
 			 rankData[40] =		wardsKilled;
 			 rankData[41] =		firstBloodKill;// 퍼블이 있을 경우 1점 없을 경우 5점
-			 System.out.println("야야야야야요요요요요");
 			 rankData[42] =		firstTowerKill;// 포탑 퍼블이 있을 경우 1점 없을 경우 5점
-			 
+
 			//--------------------------------------------------------
-			
-			
 			 
 			// 출력이 되는 변수 3개 지정
 			// rankResult[1], rankResult[2], rankResult[3]
@@ -278,7 +296,7 @@ public class MatchController {
 			
 			rankData[rankResult[1]] = 0;
 			 
-			for(int i=0; i < rankData.length; i++) {
+			for(int i=1; i < rankData.length; i++) {
 				for(int j=0; j < rankData.length-i; j++) {
 					if(rankData[i] > rankData[i+j]) {
 						rankResult[2] = i;
@@ -290,7 +308,7 @@ public class MatchController {
 			
 			rankData[rankResult[2]] = 0;
 			 
-			for(int i=0; i < rankData.length; i++) {
+			for(int i=1; i < rankData.length; i++) {
 				for(int j=0; j < rankData.length-i; j++) {
 					if(rankData[i] > rankData[i+j]) {
 						rankResult[3] = i;
@@ -329,7 +347,9 @@ public class MatchController {
 			// DTO : ChampDTO ( rankResult의 변수 9개 ) 
 			//***************************************************************		
 			
-			
+			ChampDTO = new champResultDTO(rankResult[1], rankResult[2], rankResult[3],
+								rankResult[4], rankResult[5], rankResult[6],
+								rankResult[7], rankResult[8], rankResult[9]);
 			
 		} catch(Exception e){
 			System.out.println(e.getMessage());
