@@ -17,8 +17,6 @@ import com.bean.dto.matchPlayInfoDTO;
 @Repository
 public class matchPlayDAO {
 	
-	private static final Logger logger = LoggerFactory.getLogger(matchPlayDAO.class);
-	
 	@Inject	// MyBatis 실행을 위한 SqlSession 객체를 주입받는다.
 	private SqlSession sqlSession;	
 	
@@ -26,15 +24,11 @@ public class matchPlayDAO {
 	
 	public int insertMatch(matchPlayInfoDTO match) {
 		
-		// SQL을 활용하여 데이터를 입력하는 준비를 합시다. 
-		logger.info("*************matchPlayDAO에 도착했습니다.");
-		
 		return sqlSession.insert(Namespace + ".matchPlayInfo", match);
 	}
 
 	public matchInfoDTO selectRanking(String matchId, int championId) {
 		
-		logger.info("**************DAO-selectRanking");
 		// 2개의 변수를 보내기 위해 해당 형태를 사용
 		Map<String, Object> matchChamp = new HashMap<String, Object>();
 		

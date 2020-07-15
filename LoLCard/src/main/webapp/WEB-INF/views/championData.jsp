@@ -14,17 +14,15 @@
 	<img src = "${championImg }">
 	<h2> ${championName }</h2>
 	<h2> 당신의 첫번째 업적 </h2>
-	<img src="${championData.markFirstImg }">
-	<img src="img/mark/mark_42.png">
-	<img src="img/JOKER.png" class = "logo">
+	<img src="resources/${championData.markFirstImg }">
 	<h3> ${championData.markFirstName }</h3>
 	<h3> ${championData.markFirstExplain }</h3>
 	<h2> 당신의 두번째 업적 </h2>
-	<img src="${championData.markSecondImg }">
+	<img src="resources/${championData.markSecondImg }">
 	<h3> ${championData.markSecondName }</h3>
 	<h3> ${championData.markSecondExplain }</h3>
 	<h2> 당신의 세번째 업적 </h2>
-	<img src="${championData.markThirdImg }">
+	<img src="resources/${championData.markThirdImg }">
 	<h3> ${championData.markThirdName }</h3>
 	<h3> ${championData.markThirdExplain }</h3>
 	

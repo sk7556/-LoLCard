@@ -8,9 +8,8 @@
 	<meta charset="utf-8">
     	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="css/bootstrap.css?after">
+    <link rel="stylesheet" href="resources/css/bootstrap.css?after">
 	<title> 착한정식이의 홈페이지에 오신걸 환영합니다. </title>
-	
 	
 	<style>
 		.logo {
@@ -31,7 +30,6 @@
 		#h22 {
 			color : white;
 		}
-		
 	</style>
 	
 </head>
@@ -50,8 +48,12 @@
 	<div class="container-fluid" style="height: 100vh;">
 		<!-- logo -->
 		<div id = "logoDiv">
-			<img src="img/JOKER.png" class = "logo">
-			<img src="img/JOKER.png" class = "logo">
+			<img src="resources/img/JOKER.png" class = "logo">
+			<img src="resources/img/logo.png" class = "logo">
+			<img src="resources/img/mark/mark_42.png" class = "logo">
+			<img src="resources/img/mark_42.png" class = "logo">
+			<img src="resources/img/MARK.png" class = "logo">
+			<img src="resources/img/JOKER.png" class = "logo">
 		</div>
 	    
 	    <!-- DATALIST 검색 -->

@@ -35,6 +35,8 @@ public class MatchController {
 	private matchService service;
 	
 	String API_KEY = api_key.API_KEY;
+	boolean championIdTemp = false; // 테스트하는 테이블의 챔피언 ID가 맞는지를 체크하는 변수
+	int AnlysisNum = 0; // 횟수 체크용 임시 변수
 	
 	// championId, summonerName을 받으면 챔피언의 데이터 9개를 출력합니다.
 	//----------------------------------------------------------------
@@ -54,13 +56,14 @@ public class MatchController {
 	// "CC"		= rankResult[9]
 	//----------------------------------------------------------------
 	@RequestMapping(value="/championData", method=RequestMethod.GET)
-	public String matchDetail(Model model, HttpServletRequest httpServletRequest) {
+	public String champMatchDetail(Model model, HttpServletRequest httpServletRequest) {
 	
 		VersionCheck.checkVersion();
 		BufferedReader br = null;
 		
 		String summonerName = httpServletRequest.getParameter("summonerName");
 		int	championId 	= Integer.parseInt(httpServletRequest.getParameter("championId"));
+		
 		
 		//----------------------------------------------------------------
 		// MatchV4 에서 받는 데이터
@@ -152,14 +155,17 @@ public class MatchController {
 								+ "매칭 정보 : " + jsonArr.toString());
 			
 			for(int i=0; i<jsonArr.size(); i++) {
-				JsonObject k =  (JsonObject)jsonArr.get(0); 
+				JsonObject k =  (JsonObject)jsonArr.get(i); 
 				gameId	= k.get("gameId").getAsString();
 				
 				System.out.println("*************게임아이디 출력 : " + gameId);
 				
 				// gameId마다 SQL에 데이터를 입력하기 
 				matchDetail(gameId, championId);
+				
+				// 여기 들어가기 전에 championId랑 myPlayData가 1인 테이블의 championId가 다르면 
 			
+			if(championIdTemp == true) { 
 				// 입력된 데이터를 기반으로 championStatic을 통해 matchPlayInfoDTO를 뽑아내서 순위 데이터 보기
 				MID = championStatic(gameId, championId);
 				
@@ -231,12 +237,20 @@ public class MatchController {
 		 		wardsKilled += MID.getWardsKilled();
 		 		firstBloodKill += MID.getFirstBloodKill();// 퍼블이 있을 경우 1점 없을 경우 5점
 		 		firstTowerKill += MID.getFirstTowerKill();// 포탑 퍼블이 있을 경우 1점 없을 경우 5점
-			
-		 	} // End For
+		 		
+		 		System.out.println("제대로되는지 말해주라." + 
+		 				totalDamageDealt + "쫌쫌" + magicDamageDealt);
+		 		
+		 		championIdTemp = false; // 챔피언 아이디 체크 초기화 
+		 		
+		 		AnlysisNum++;
+			} // End 챔피언 데이터 비교
+		 } // End For
 			
 			//--------------------------------------------------------
 			// 데이터를 랭크 매기기 위해 배열로 작성
-			 rankData[1] =		kills;		
+			 rankData[0] =      99999; // 비교용 데이터
+ 			 rankData[1] =		kills;		
 			 rankData[2] =		deaths;
 			 rankData[3] =		assists;
 			 rankData[4] =		largestKillingSpree;
@@ -280,58 +294,80 @@ public class MatchController {
 			 rankData[42] =		firstTowerKill;// 포탑 퍼블이 있을 경우 1점 없을 경우 5점
 
 			//--------------------------------------------------------
+			
+			System.out.println("테스트테스트 " +
+					rankData[1] + "    " +
+					rankData[2] + "    " +
+					rankData[3] + "    " +
+					rankData[4] + "    " +
+					rankData[5] + "    " +
+					rankData[6] + "    " +
+					rankData[7] + "    " +
+					rankData[8] + "    " +
+					rankData[9] + "    " +
+					rankData[10] + "    " +
+					rankData[11] + "    " +
+					rankData[12] + "    " +
+					rankData[13] + "    " +
+					rankData[14] + "    "
+					
+					+ "추출한 횟수를 말해보렴" + AnlysisNum
+					);
+			
 			 
 			// 출력이 되는 변수 3개 지정
 			// rankResult[1], rankResult[2], rankResult[3]
 			// 제일 작은 값부터 1,2,3을 지정한다 ( 순위 데이터이므로 낮은게 더 우월한 수치 ) 
 			 
-			for(int i=1; i < rankData.length; i++) {
-				for(int j=0; j < rankData.length-i; j++) {
-					if(rankData[i] < rankData[i+j]) {
-						rankResult[1] = i;
-					} else {
-						rankResult[1] = i+j;
-					}
+			int min = 99999; // 최소값 기대치
+			int minNum = 0; // 최소값의 번호
+			 
+			for(int i = 0 ; i < rankData.length; i++) {
+				if(min > rankData[i]) {
+					min = rankData[i];
+					minNum = i;			// 최소값에 해당하는 rankData의 ID를 기록
 				}
 			}
 			
-			rankData[rankResult[1]] = 100;
+			rankResult[1] = minNum; 	// 첫번째 성적을 min으로 지정
+			min = 1000; 				// min 초기화
+			minNum = 0;				// minNum 초기화
+			rankData[rankResult[1]] = 100; // 기존 최소값을 최대 값으로 변경;
 			 
-			for(int i=1; i < rankData.length; i++) {
-				for(int j=0; j < rankData.length-i; j++) {
-					if(rankData[i] > rankData[i+j]) {
-						rankResult[2] = i;
-					} else {
-						rankResult[2] = i+j;
-					}
+			 for(int i = 0 ; i < rankData.length; i++) {
+				if(min > rankData[i]) {
+					min = rankData[i];
+					minNum = i;			// 최소값에 해당하는 rankData의 ID를 기록
+				}
+			 }
+			
+			rankResult[2] = minNum; 	// 두번째 성적을 min으로 지정
+			min = 1000; 					// min 초기화
+			minNum = 0;					// minNum 초기화
+			rankData[rankResult[2]] = 100; // 기존 최소값을 최대 값으로 변경;
+			 
+			for(int i = 0 ; i < rankData.length; i++) {
+				if(min > rankData[i]) {
+					min = rankData[i];
+					minNum = i;			// 최소값에 해당하는 rankData의 ID를 기록
 				}
 			}
 			
-			rankData[rankResult[2]] = 100;
-			 
-			for(int i=1; i < rankData.length; i++) {
-				for(int j=0; j < rankData.length-i; j++) {
-					if(rankData[i] > rankData[i+j]) {
-						rankResult[3] = i;
-					} else {
-						rankResult[3] = i+j;
-					}
-				}
-			}
+			rankResult[3] = minNum; 	// 세번째 성적을 min으로 지정
 			
 			// rankResult[4~9]를 마련하자.
 			// 10에서 뺀 값을 주어 값을 확인해보자. 
 			// 성장		
-			rankResult[4] = (int)(10 - (champLevel + goldEarned)/ (2 * jsonArr.size()));
+			rankResult[4] = (int)(10 - (champLevel + goldEarned)/(2 * AnlysisNum));
 			// 킬관여
-			rankResult[5] = (int)(10 - (kills + assists + killingSprees) / (3 * jsonArr.size()));
+			rankResult[5] = (int)(10 - (kills + assists + killingSprees) / (3 * AnlysisNum));
 			// 시야 점수
-			rankResult[6] = (int)(10 - (visionScore + visionWardsBoughtInGame + wardsPlaced + wardsKilled)/(4*jsonArr.size()));
+			rankResult[6] = (int)(10 - (visionScore + visionWardsBoughtInGame + wardsPlaced + wardsKilled)/(4*AnlysisNum));
 			// 오브젝트
 			rankResult[7] = (int)(10 - (damageDealtToObjectives + 
 							damageDealtToTurrets + 
 							turretKills + 
-							inhibitorKills + firstTowerKill) / (5*jsonArr.size()));
+							inhibitorKills + firstTowerKill) / (5*AnlysisNum));
 			// 전투력
 			rankResult[8] = (int)(10 - (kills 
 							+ assists 
@@ -339,9 +375,9 @@ public class MatchController {
 							+ totalDamageDealt 
 							+ totalHeal 
 							+ damageSelfMitigated 
-							+ totalDamageTaken) / (7*jsonArr.size())) ;
+							+ totalDamageTaken) / (7*AnlysisNum)) ;
 			// CC
-			rankResult[9] = (int)(10 - timeCCingOthers / jsonArr.size());
+			rankResult[9] = (int)(10 - timeCCingOthers / AnlysisNum);
 				
 			//***************************************************************		
 			// DTO에 정보를 넣어서 모델로 보내버립시다.
@@ -363,8 +399,9 @@ public class MatchController {
 		String ChampImg = "http://ddragon.leagueoflegends.com/cdn/10.14.1/img/champion/" + Champion.searchChampion(championId) + ".png";
 		model.addAttribute("championImg", ChampImg);
 		
+		
 		return "championData";
-	} // End matchDetail Controller
+	} // End champMatchDetail Controller
 	
 	//----------------------------------------------------------------
 	// MatchV4 에서 받는 데이터
@@ -397,9 +434,6 @@ public class MatchController {
 		JsonObject arr1 = (JsonObject) jsonParser.parse(result);
 		JsonArray arr2 = (JsonArray)arr1.get("participants");
 		
-		System.out.println("********matchInfoParticipants : " + arr2.toString());
-		// System.out.println("**********matchInfo의 JSON값 : " + k.toString());
-		
 		// matchPlayInfoDTO를 통해 플레이어 수치 데이터를 입력받아 DAO - SQL에 전송하여 비교 데이터를 다시 넘겨받는다.
 		for(int i=0; i<arr2.size(); i++) {
 			JsonObject arr3 =  (JsonObject)arr2.get(i);
@@ -414,6 +448,7 @@ public class MatchController {
 			// 플레이어의 데이터인지를 구분하는 코드
 			if(championId == arr3.get("championId").getAsInt()) {
 				myPlayData = true;
+				championIdTemp = true;
 			}
 			
 			match.setChampionId(arr3.get("championId").getAsInt());
@@ -464,6 +499,8 @@ public class MatchController {
 			match.setFirstTowerKill(k.get("firstTowerKill").getAsBoolean());
 			
 			service.insertMatchPlay(match); // DAO에 담아서 SQL에 기록.
+			
+			
 			
 		} // End for 
 		} catch (Exception e) {
