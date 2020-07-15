@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.bean.api.api_key;
 import com.bean.config.VersionCheck;
+import com.bean.data.Champion;
 import com.bean.dto.champResultDTO;
 import com.bean.dto.matchInfoDTO;
 import com.bean.dto.matchPlayInfoDTO;
@@ -209,7 +210,7 @@ public class MatchController {
 		 		physicalDamageDealtToChampions += MID.getPhysicalDamageDealtToChampions();
 		 		trueDamageDealtToChampions += MID.getTrueDamageDealtToChampions();
 		 		totalHeal			+= MID.getTotalHeal();
-		 		totalUnitsHealed	+= MID.getTotalUnitsHealed();
+		 		totalUnitsHealed	+= 10;						// ---사용하지 않는 데이터
 		 		damageSelfMitigated += MID.getDamageSelfMitigated();
 		 		damageDealtToObjectives += MID.getDamageDealtToObjectives();
 		 		damageDealtToTurrets += MID.getDamageDealtToTurrets();
@@ -225,8 +226,8 @@ public class MatchController {
 		 		totalMinionsKilled += MID.getTotalMinionsKilled();
 		 		neutralMinionsKilledEnemyJungle += MID.getNeutralMinionsKilledEnemyJungle();
 		 		champLevel += MID.getChampLevel();
-		 		visionWardsBoughtInGame += MID.getVisionWardsBoughtInGame(); 
-		 		wardsPlaced += MID.getWardsPlaced();
+		 		visionWardsBoughtInGame += 10; 				// ---사용하지 않는 데이터
+		 		wardsPlaced += 10;							// ---사용하지 않는 데이터
 		 		wardsKilled += MID.getWardsKilled();
 		 		firstBloodKill += MID.getFirstBloodKill();// 퍼블이 있을 경우 1점 없을 경우 5점
 		 		firstTowerKill += MID.getFirstTowerKill();// 포탑 퍼블이 있을 경우 1점 없을 경우 5점
@@ -294,7 +295,7 @@ public class MatchController {
 				}
 			}
 			
-			rankData[rankResult[1]] = 0;
+			rankData[rankResult[1]] = 100;
 			 
 			for(int i=1; i < rankData.length; i++) {
 				for(int j=0; j < rankData.length-i; j++) {
@@ -306,7 +307,7 @@ public class MatchController {
 				}
 			}
 			
-			rankData[rankResult[2]] = 0;
+			rankData[rankResult[2]] = 100;
 			 
 			for(int i=1; i < rankData.length; i++) {
 				for(int j=0; j < rankData.length-i; j++) {
@@ -356,7 +357,11 @@ public class MatchController {
 		} // End TryCatch
 		
 		// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<매치정보리스트
+		System.out.println("************DTO정보리스트 : " + ChampDTO.toString());
 		model.addAttribute("championData", ChampDTO);
+		model.addAttribute("championName", Champion.searchChampion(championId)); // 챔피언 이름 전송
+		String ChampImg = "http://ddragon.leagueoflegends.com/cdn/10.14.1/img/champion/" + Champion.searchChampion(championId) + ".png";
+		model.addAttribute("championImg", ChampImg);
 		
 		return "championData";
 	} // End matchDetail Controller
