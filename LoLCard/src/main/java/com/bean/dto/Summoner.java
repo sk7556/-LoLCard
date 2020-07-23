@@ -13,6 +13,7 @@ public class Summoner {
 		
 	}
 	
+	// DataMining에서 사용하는 생성자
 	public Summoner(int profileIconId, String name, String puuid, long summonerLevel, long revisionDate, String id,
 			String accountId) {
 		super();
@@ -24,6 +25,7 @@ public class Summoner {
 		this.id = id;
 		this.accountId = accountId;
 	}
+	
 	public int getProfileIconId() {
 		return profileIconId;
 	}

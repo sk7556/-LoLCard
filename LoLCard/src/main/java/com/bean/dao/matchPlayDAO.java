@@ -11,11 +11,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import com.bean.controller.LoLCardController;
+import com.bean.dto.matchDTO;
 import com.bean.dto.matchInfoDTO;
 import com.bean.dto.matchPlayInfoDTO;
+import com.bean.dto.staticPlayerDataDTO;
 
 @Repository
 public class matchPlayDAO {
+	
+	private static final Logger logger = LoggerFactory.getLogger(matchPlayDAO.class);
 	
 	@Inject	// MyBatis 실행을 위한 SqlSession 객체를 주입받는다.
 	private SqlSession sqlSession;	
@@ -36,6 +41,19 @@ public class matchPlayDAO {
 		matchChamp.put("championId", championId);
 		
 		return sqlSession.selectOne(Namespace + ".selectRanking", matchChamp);
+	}
+
+	public int insertMatchList(matchDTO matchRef) {
+
+		
+		return sqlSession.insert(Namespace + ".insertMatchList", matchRef);
+	}
+
+	public staticPlayerDataDTO selectMatchData(String summonerName) {
+
+		logger.info("DAO-셀렉트매치데이타");
+		
+		return sqlSession.selectOne(Namespace + ".selectMatchData", summonerName);
 	}
 	
 	

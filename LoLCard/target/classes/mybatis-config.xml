@@ -6,5 +6,8 @@
 		<typeAliases>
 			<typeAlias type="com.bean.dto.matchPlayInfoDTO" alias="matchPlayInfoDTO"/>
 			<typeAlias type="com.bean.dto.matchInfoDTO" alias="matchInfoDTO"/>
+			<typeAlias type="com.bean.dto.matchDTO" alias="matchDTO"/>
+			<typeAlias type="com.bean.dto.staticPlayerDataDTO" alias="staticPlayerDataDTO"/>
+			
 		</typeAliases>		
 	</configuration>

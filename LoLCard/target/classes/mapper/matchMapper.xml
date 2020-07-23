@@ -104,6 +104,7 @@
 			)  ON DUPLICATE KEY UPDATE primaryCode = VALUES(primaryCode);
 	</insert>
 	
+	<!-- 챔피언별 플레이 데이터의 순위를 통해 나의 가장 잘하는 플레이 1,2,3을 체크하는 쿼리  -->
 	<select id = "selectRanking" parameterType = "hashMap" resultType = "matchInfoDTO">
 	
 	select (select count(*) from matchpartydata where kills > b.kills and matchId = #{matchId} ) as kills,
@@ -153,7 +154,112 @@
 	where championId = #{championId} and matchId = #{matchId} and myPlayData=1
 	
 	</select>
+	
+	
+	
+	<!-- LoLCard의 데이터를 입력받는 쿼리 -->
+	<insert id="insertMatchList" parameterType="matchDTO">
+	INSERT	INTO LoLCardMatch
+			( summonerName, gameId, champion, lane, 
+			item0, item1, item2,
+			item4, item5, item6, 
+			runeMain, runeSub, 
+			rune_0, rune_1, rune_2, 
+			rune_3, rune_4, rune_5
+			)
+			
+	VALUES	( #{summonerName}, #{gameId}, #{champion}, #{lane}, 
+			  #{item0}, #{item1}, #{item2}, 
+			  #{item4}, #{item5}, #{item6}, 
+			  #{runeMain}, #{runeSub}, 
+			  #{rune_0}, #{rune_1}, #{rune_2}, 
+			  #{rune_3}, #{rune_4}, #{rune_5} )  
+			  ON DUPLICATE KEY UPDATE gameId = VALUES(gameId)
+	</insert>
+	
+	<!--  DAO에 요청하여 데이터의 평균 데이터를 추출, matchDTO형식으로 받음 		-->
+	<!--  	챔피언 1,2,3 - 룬 - 아이템 - 포지션. 이렇게 정보를 뽑음  			-->
+	<!--  	챔피언 1,2,3 : 가장 많이 플레이한 챔피언			 			-->
+	<!--  	룬 : 매판 5개의 룬 중 가장 많이 사용한 룬							-->
+	<!--  	아이템 : 매판 아이템 중 가장 많이 사용한 아이템 						-->
+	<!--  	포지션 : 가장 많이 플레이한 라인 								-->
+	<select id="selectMatchData" parameterType = "String" resultType = "staticPlayerDataDTO">
+	
+	select 
 		
+		-- MostChampion_1
+	
+	(select champion from
+	(select @rownum := @rownum +1 as rownum, t.* 
+	from (select champion, count(*) from LoLCardMatch group by champion order by count(*) desc limit 3) t, 
+	(select @rownum := 0 ) tmp ) a
+	where rownum = 1) as MostChampion_1,
+	
+		-- MostChampion_2
+		
+	(select champion from
+	(select @rownum_2 := @rownum_2 +1 as rownum, tt.* 
+	from (select champion, count(*) from LoLCardMatch group by champion order by count(*) desc limit 3) tt, 
+	(select @rownum_2 := 0 ) tmp ) aa
+	where rownum = 2) as MostChampion_2,
+	
+		-- MostChampion_3
+		
+	(select champion from
+	(select @rownum_3 := @rownum_3 +1 as rownum, ttt.* 
+	from (select champion, count(*) from LoLCardMatch group by champion order by count(*) desc limit 3) ttt, 
+	(select @rownum_3 := 0 ) tmp ) aaa
+	where rownum = 3) as MostChampion_3,
+	
+		-- MostRune
+		
+	(select Rune from
+	(select Rune, count(*) as count
+	from
+	(select Rune from (
+	select rune_0 as Rune from lolcardmatch
+	union all
+	select rune_1 from lolcardmatch
+	union all
+	select rune_2 from lolcardmatch
+	union all
+	select rune_3 from lolcardmatch
+	union all
+	select rune_4 from lolcardmatch
+	union all
+	select rune_5 from lolcardmatch ) as a) as b group by Rune order by count desc limit 1) as mi) as MostRune,
+		
+		-- MostItem
+		
+	(select item from
+	(select 
+	item, count(if(item != 0, item, null)) as count
+	from
+	(select item from (
+	select item0 as item from lolcardmatch
+	union all
+	select item1 as item from lolcardmatch
+	union all
+	select item2 from lolcardmatch
+	union all
+	select item4 from lolcardmatch
+	union all
+	select item5 from lolcardmatch
+	union all
+	select item6 from lolcardmatch ) as a) as b group by item order by count desc limit 1) as mi) as MostItem,
+		
+		-- MostPosition
+		
+	(select lane 
+	from
+	(select lane, count(*) from lolcardmatch group by lane order by count(*) desc limit 1) as ln ) as MostPosition
+	
+	<!-- 검색 조건 : 이름  -->
+	from LoLCardMatch where summonerName = #{summonerName}
+	limit 1;
+	
+	</select>
+	
 </mapper>
   
   

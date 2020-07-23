@@ -229,7 +229,7 @@ public class DataMining {
 				String	role		= k.get("role").getAsString();
 				String	lane		= k.get("lane").getAsString();
 				
-				matchRef[i] = new matchDTO(platformId, gameId, champion, championImg,
+				matchRef[i] = new matchDTO(SummonerName, platformId, gameId, champion, championImg,
 											queue, season, timestamp, role, lane);
 			}
 			

@@ -61,20 +61,15 @@ public class MatchController {
 		String summonerName = httpServletRequest.getParameter("summonerName");
 		int	championId 	= Integer.parseInt(httpServletRequest.getParameter("championId"));
 		
-		
 		//----------------------------------------------------------------
 		// MatchV4 에서 받는 데이터
 		// matchDetail - playInformation
 		// 검색한 유저의 매치 30판의 데이터를 입력 받습니다. 
 		//----------------------------------------------------------------
 						
-		//------------------------------------------
 		// Name 으로 accountId 찾기
-		//------------------------------------------
 		String accountId = nameToAccount(summonerName);
-		//------------------------------------------
 		// Name 으로  matchId 찾기
-		//------------------------------------------		
 		String gameId = null; // gameId리스트가 들어갈 배열 생성
 		matchInfoDTO MID = null;
 		int rankData[] = new int[43];
@@ -235,14 +230,13 @@ public class MatchController {
 		 		firstBloodKill += MID.getFirstBloodKill();// 퍼블이 있을 경우 1점 없을 경우 5점
 		 		firstTowerKill += MID.getFirstTowerKill();// 포탑 퍼블이 있을 경우 1점 없을 경우 5점
 		 		
-		 		System.out.println("제대로되는지 말해주라." + 
-		 				totalDamageDealt + "쫌쫌" + magicDamageDealt);
-		 		
 		 		championIdTemp = false; // 챔피언 아이디 체크 초기화 
 		 		
 		 		AnlysisNum++;
 			} // End 챔피언 데이터 비교
 		 } // End For
+			
+			// **** 출력부
 			
 			//--------------------------------------------------------
 			// 데이터를 랭크 매기기 위해 배열로 작성
@@ -496,7 +490,6 @@ public class MatchController {
 			match.setFirstTowerKill(k.get("firstTowerKill").getAsBoolean());
 			
 			service.insertMatchPlay(match); // DAO에 담아서 SQL에 기록.
-			
 			
 			
 		} // End for 

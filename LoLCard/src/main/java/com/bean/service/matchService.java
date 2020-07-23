@@ -9,8 +9,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.bean.dao.matchPlayDAO;
+import com.bean.dto.matchDTO;
 import com.bean.dto.matchInfoDTO;
 import com.bean.dto.matchPlayInfoDTO;
+import com.bean.dto.staticPlayerDataDTO;
 
 @Service
 public class matchService {
@@ -31,6 +33,19 @@ public class matchService {
 		logger.info("서비스-셀렉트랭킹");
 		
 		return matchPlay.selectRanking(matchId, championId);
+	}
+
+	public int insertMatchList(matchDTO matchRef) {
+		logger.info("서비스-인서트매치리스트");
+		
+		return matchPlay.insertMatchList(matchRef);
+	}
+
+	public staticPlayerDataDTO selectMatchData(String summonerName) {
+		
+		logger.info("서비스-셀렉트매치데이타" );
+		
+		return matchPlay.selectMatchData(summonerName);
 	}
 	
 	
