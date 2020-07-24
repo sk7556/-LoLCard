@@ -199,7 +199,6 @@ public class LoLCardController {
 			-------------------------------------------------------------------------*/
 			
 			// MySQL - LoLCardMatch로 부터 통계 받아내기
-			System.out.println("여기가 문제야 ??");
 			SPDto = service.selectMatchData(SummonerName); 
 			System.out.println("분석 데이터를 뽑아낸다. : " + SPDto.toString());
 			
@@ -256,6 +255,8 @@ public class LoLCardController {
 		
 		model.addAttribute("RuneImg", "");
 		model.addAttribute("ItemImg", "http://ddragon.leagueoflegends.com/cdn/10.14.1/img/item/" + LoLCard.getMostItem() + ".png");
+		model.addAttribute("RuneImg", "resources/img/Rune/" + LoLCard.getMostRune() +".png");
+		model.addAttribute("PositionImg", "resources/img/Position/" + LoLCard.getMostPosition() + ".png");
 		
 		return "LoLCard";
 	} // End - public searchData

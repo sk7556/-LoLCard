@@ -32,12 +32,16 @@
 	
 	<h2> 최애 룬 </h2>
 	<h3> ${LoLCard.mostRuneName } </h3>
+	<img src= ${RuneImg } >
 	<h2> 최애 룬 설명 </h2>
 	<h3> ${LoLCard.mostRuneEx } </h3>
 	<h2> 최애 아이템</h2>
 	<h3> ${LoLCard.mostItemName } </h3>
-	<h2> 최애 아이템 설명</h2>
+	<img src = ${ItemImg } >
+	<h2> 최애 포지션 </h2>
 	<h3> ${LoLCard.mostPosition } </h3>
+	<img src = ${PositionImg } >
+	
 	
 	
 </body>

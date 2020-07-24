@@ -191,7 +191,7 @@
 	
 	(select champion from
 	(select @rownum := @rownum +1 as rownum, t.* 
-	from (select champion, count(*) from LoLCardMatch group by champion order by count(*) desc limit 3) t, 
+	from (select champion, count(*) from LoLCardMatch where summonerName = #{summonerName} group by champion order by count(*) desc limit 3) t, 
 	(select @rownum := 0 ) tmp ) a
 	where rownum = 1) as MostChampion_1,
 	
@@ -199,7 +199,7 @@
 		
 	(select champion from
 	(select @rownum_2 := @rownum_2 +1 as rownum, tt.* 
-	from (select champion, count(*) from LoLCardMatch group by champion order by count(*) desc limit 3) tt, 
+	from (select champion, count(*) from LoLCardMatch where summonerName = #{summonerName} group by champion order by count(*) desc limit 3) tt, 
 	(select @rownum_2 := 0 ) tmp ) aa
 	where rownum = 2) as MostChampion_2,
 	
@@ -207,7 +207,7 @@
 		
 	(select champion from
 	(select @rownum_3 := @rownum_3 +1 as rownum, ttt.* 
-	from (select champion, count(*) from LoLCardMatch group by champion order by count(*) desc limit 3) ttt, 
+	from (select champion, count(*) from LoLCardMatch where summonerName = #{summonerName} group by champion order by count(*) desc limit 3) ttt, 
 	(select @rownum_3 := 0 ) tmp ) aaa
 	where rownum = 3) as MostChampion_3,
 	
@@ -217,17 +217,17 @@
 	(select Rune, count(*) as count
 	from
 	(select Rune from (
-	select rune_0 as Rune from lolcardmatch
+	select rune_0 as Rune from lolcardmatch where summonerName = #{summonerName}
 	union all
-	select rune_1 from lolcardmatch
+	select rune_1 from lolcardmatch where summonerName = #{summonerName}
 	union all
-	select rune_2 from lolcardmatch
+	select rune_2 from lolcardmatch where summonerName = #{summonerName}
 	union all
-	select rune_3 from lolcardmatch
+	select rune_3 from lolcardmatch where summonerName = #{summonerName}
 	union all
-	select rune_4 from lolcardmatch
+	select rune_4 from lolcardmatch where summonerName = #{summonerName}
 	union all
-	select rune_5 from lolcardmatch ) as a) as b group by Rune order by count desc limit 1) as mi) as MostRune,
+	select rune_5 from lolcardmatch where summonerName = #{summonerName} ) as a) as b group by Rune order by count desc limit 1) as mi) as MostRune,
 		
 		-- MostItem
 		
@@ -236,23 +236,23 @@
 	item, count(if(item != 0, item, null)) as count
 	from
 	(select item from (
-	select item0 as item from lolcardmatch
+	select item0 as item from lolcardmatch where summonerName = #{summonerName}
 	union all
-	select item1 as item from lolcardmatch
+	select item1 as item from lolcardmatch where summonerName = #{summonerName}
 	union all
-	select item2 from lolcardmatch
+	select item2 from lolcardmatch where summonerName = #{summonerName}
 	union all
-	select item4 from lolcardmatch
+	select item4 from lolcardmatch where summonerName = #{summonerName}
 	union all
-	select item5 from lolcardmatch
+	select item5 from lolcardmatch where summonerName = #{summonerName}
 	union all
-	select item6 from lolcardmatch ) as a) as b group by item order by count desc limit 1) as mi) as MostItem,
+	select item6 from lolcardmatch where summonerName = #{summonerName} ) as a) as b group by item order by count desc limit 1) as mi) as MostItem,
 		
 		-- MostPosition
 		
 	(select lane 
 	from
-	(select lane, count(*) from lolcardmatch group by lane order by count(*) desc limit 1) as ln ) as MostPosition
+	(select lane, count(*) from lolcardmatch where summonerName = #{summonerName} group by lane order by count(*) desc limit 1) as ln ) as MostPosition
 	
 	<!-- 검색 조건 : 이름  -->
 	from LoLCardMatch where summonerName = #{summonerName}
