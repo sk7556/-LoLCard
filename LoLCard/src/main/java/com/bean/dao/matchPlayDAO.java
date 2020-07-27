@@ -55,6 +55,23 @@ public class matchPlayDAO {
 		
 		return sqlSession.selectOne(Namespace + ".selectMatchData", summonerName);
 	}
+
+	public List<String> selectMatchIdList(String summonerName, String mostPosition) {
+		
+		logger.info("DAO-셀렉트 매치아이디 리스트");
+		
+		Map<String, Object> summonerPosition = new HashMap<String, Object>();
+		
+		summonerPosition.put("summonerName", summonerName);
+		summonerPosition.put("mostPosition", mostPosition);
+		
+		return sqlSession.selectList(Namespace + ".selectMatchIdList", summonerPosition);
+	}
+
+	public matchInfoDTO selectLaneRanking(String matchId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(Namespace + ".selectLaneRanking", matchId);
+	}
 	
 	
 	

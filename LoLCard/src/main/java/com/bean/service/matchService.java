@@ -47,6 +47,17 @@ public class matchService {
 		
 		return matchPlay.selectMatchData(summonerName);
 	}
+
+	public List<String> selectMatchId(String summonerName, String mostPosition) {
+		
+		
+		return matchPlay.selectMatchIdList(summonerName, mostPosition);
+	}
+
+	public matchInfoDTO selectLaneRanking(String matchId) {
+		
+		return matchPlay.selectLaneRanking(matchId);
+	}
 	
 	
 }
