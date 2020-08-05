@@ -50,7 +50,6 @@ public class PositionController {
 		String mostPosition	= httpServletRequest.getParameter("mostPosition");
 		
 	try {
-		
 		//-----------------------------------------------------------------
 		//
 		// 포지션에 해당하는 matchID를 확인하자.

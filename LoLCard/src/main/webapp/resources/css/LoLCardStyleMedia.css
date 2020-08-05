@@ -1,0 +1,71 @@
+@charset "UTF-8";
+
+/* For below 768px screen width */
+@media screen and (max-width: 768px){
+	
+	.body { 
+		font-size : 80%;
+	}
+	
+	#navbar {
+		justify-content: space-between;
+		flex-direction : column;
+	}
+	
+	.embed-submit-field {
+		width : 100%;
+	    padding: 15px;
+	    height: 50%;
+	    font-size: 50%;
+	}
+		
+	.navbar__menu {
+	}
+	
+	.blankMenu {
+		display : none;
+	}
+	
+	.lolcard {
+		flex-direction : column;
+	}
+	
+	.lolcard__right {	
+		margin : 0 50px;
+		max-width : 500px;
+		
+	}
+	
+	.lolcard__left{
+		margin : 120px 50px 0 50px;
+		max-width : 500px;
+	}
+	
+	.embed-submit-field button {
+	    right: -40px;
+	    top: 20px;
+	}
+	
+	.mostRune {
+		justify-content : center;
+	}
+}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
+	
+	
+
+	
+	
+}

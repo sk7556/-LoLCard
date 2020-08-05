@@ -1,0 +1,65 @@
+@charset "UTF-8";
+
+body {
+	text-align : center;
+	margin : auto;
+}
+
+.container {
+	text-align : center;
+}
+
+#logoDiv{
+	text-align: center;
+}
+
+.logo { 
+	width : 250px;
+	margin : 40px;
+	border : 1px solid var(--color-grey);
+	border-radius : 10px;	
+}
+
+.logoo{
+	width : 15px;
+	margin : 15px;
+	display : none;
+}
+
+.logoo.loading {
+	display : block;
+}
+
+.searchBar{
+	text-align : center;
+	max-width : 600px;
+	margin:auto;
+}
+
+.searchBarData {
+	text-align : center;
+	max-width : 600px;
+	margin:auto;
+}
+
+.searchButton.loading {
+	display : none;
+}
+
+#loading {
+ width: 100%;  
+ height: 100%;  
+ top: 0px;
+ left: 0px;
+ position: fixed;  
+ display: block;  
+ opacity: 0.7;  
+ background-color: #fff;  
+ z-index: 99;  
+ text-align: center; } 
+  
+#loading-image {  
+ position: absolute;  
+ top: 50%;  
+ left: 50%; 
+ z-index: 100; }

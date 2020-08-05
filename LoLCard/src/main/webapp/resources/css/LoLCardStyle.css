@@ -1,0 +1,159 @@
+@charset "UTF-8";
+
+/* Navbar */
+
+#navbar {
+	transform: translateX(5px);
+	position: fixed;
+	width : 100%;
+	display: flex;
+	justify-content: space-between;
+	background-color: var(--color-orange);
+	opacity : 100%;
+	align-items: center; 
+	color : var(--color-white);
+	transition : all 500ms ease-in-out;
+	z-index : 1;
+}
+
+.navbar__menu {
+	display : flex;
+}
+
+.navbar__logo {
+	padding : 0 30px 0 30px;
+	font-size: var(--font-medium);
+	font-weight: var(--weight-semi-bold);
+	color : var(--color-white);
+	align-items : center;
+	display : flex;
+	justify-content : space-around;
+}
+
+.navbar__menu__item {
+	padding : 8px 12px 0 12px;
+	margin : 0;
+	color : var(--color-white);
+	cursor : pointer;
+	border : 1px solid transparent;
+	border-radius : var(--size-border-radius);
+	flex-wrap: nowrap;
+	width : 120%;	
+}
+
+
+.navbar__menu__item:hover{
+	border: 1px solid var(--color-white);
+	background-color: var(--color-dark-pink);
+	border-radius: var(--size-border-radius);	
+	border-color : var(--color-white);
+}
+
+.blankMenu {
+	width : 300px;
+}
+
+.searchMenu {
+	margin : 0 50px 0 0;
+}
+
+.lolcard{
+	padding : 40px 0 0 0;
+	display : flex;
+	justify-content : center;	
+}
+
+/* LoLCard - left */
+
+.lolcard__left{
+	margin : 40px 50px 40px 50px;
+	max-width : 500px;
+	border : 5px solid var(--color-orange);	
+	border-radius :  20px;
+}
+
+.profile {
+	display : flex;
+}
+
+.profile__left {
+	align-items : center;
+	display : flex;
+}
+
+.profile__right{
+	margin : 30px 0 0 0 ;
+	padding : 10px;
+}
+
+.profileImg{
+	width : 150px;
+	height : 150px;
+	border-radius : 10px;
+	padding : 10px;
+}
+
+/* LoLCard - right */
+
+.lolcard__right {	
+	max-width : 800px;
+	margin : 40px 50px 0 0;
+	border : 5px solid var(--color-orange);	
+	border-radius : 20px;
+}
+
+.mostChampion {
+	padding : 10px 0 10px 10px;
+	display : flex;
+	justify-content: center;
+}
+
+.championList {
+	padding :10px;
+	text-align : center;
+}
+
+.mostRune {
+	padding : 10px;
+	display : flex;
+	justify-content : space-around;
+	text-align: center;
+}
+
+.mostItem {
+	padding : 10px;	
+	justify-content : center;
+	text-align: center;
+}
+
+.mostPosition{
+	padding: 10px;
+    margin: 30px 50px;
+    text-align: center;
+    border: 5px solid var(--color-orange);
+    border-radius: 10px;
+}
+
+.positionImg{
+	padding : 10px;
+	width : 100px;
+	height : 100px;
+	position : center;
+}
+
+.championImg{
+	width : 60px;
+	height : 60px;
+	border-radius : 50%;
+}
+
+.contentTitle {
+	display:flex;
+	align-items : center;
+	flex-wrap : wrap;
+}
+
+
+
+
+

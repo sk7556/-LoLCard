@@ -1,0 +1,20 @@
+@charset "UTF-8";
+
+/* For below 768px screen width */
+@media screen and (max-width: 768px){
+	
+	.textPlace::placeholder {
+		font-size : var(--font-micro);
+	}
+
+	.searchBar{
+		text-align : center;
+		margin:auto;
+	}
+	
+	.searchBarData {
+		display : none;
+	}
+	
+}
+

@@ -30,6 +30,14 @@
 	<nav id = "navbar">
 		<div class="navbar__logo">
 			LoLCard - ${LoLCard.summonerName }
+			<div class = "searchMenu">
+			<form id="searchWindow" action="/LoLCard" method="GET">
+				<div class="embed-submit-field">
+					<input type="text" placeholder="소환사이름" name="summonerName">
+					<button type="submit">검색!</button>
+				</div>
+			</form>
+			</div>
 		</div>
 		
 		<!-- Toggle button -->
@@ -38,22 +46,13 @@
 			<!-- 		<i class="fas fa-address-card"></i> -->
 		<!-- 	</button> -->
 		
-		<div class = "searchMenu">
-			<form id="searchWindow" action="/LoLCard" method="GET">
-				<div class="embed-submit-field">
-					<input type="text" placeholder="소환사이름" name="summonerName">
-					<button type="submit">검색!</button>
-				</div>
-			</form>
-		</div>
-		
 		<div class = "blankMenu"></div>
 		
 		<div class = "navbar_menu_div">
 			<ul class="navbar__menu">
 				<li class="navbar__menu__item" > 첫화면으로 </li>
 				<li class="navbar__menu__item" > LoLCard </li>
-				<li class="navbar__menu__item" > 포지션 카드 </li>
+				<li class="navbar__menu__item" > <a href="../positionData?"> 포지션 카드 </a></li>
 				<li class="navbar__menu__item" > 챔피언 카드 </li>
 			</ul>
 		</div>
@@ -104,7 +103,7 @@
 			<h3 align = "center"> 자주 사용하는 룬 - ${LoLCard.mostRuneName }</h3>
 			<div class = "mostRune">
 				<img src= ${RuneImg } class = "runeImg">					
-				<h3 class = "contentTitle"> ${LoLCard.mostRuneEx } </h3>
+				<h4 class = "contentTitle"> ${LoLCard.mostRuneEx } </h4>
 			</div>
 			<hr>
 			<h3 align = "center"> 자주 사용하는 아이템 - ${LoLCard.mostItemName }  </h3>
@@ -112,7 +111,15 @@
 				<img src = ${ItemImg } class = "itemImg">
 			</div>
 		</div>
+	</div>
 	
+	<div class = "footer">
+		<div>
+			<h3> 개발자 정보</h3>
+		</div>
+		<div>
+			<h3> 남정식 / sk7556@naver.com </h3>
+		</div>
 	</div>
 	
 </body>
