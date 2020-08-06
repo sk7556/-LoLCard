@@ -31,13 +31,12 @@
 	}
 	
 	.lolcard__right {	
-		margin : 0 50px;
+		margin : 20px auto 0 auto;
 		max-width : 500px;
-		
 	}
 	
 	.lolcard__left{
-		margin : 120px 50px 0 50px;
+		margin : 120px auto 0 auto;
 		max-width : 500px;
 	}
 	

@@ -23,6 +23,7 @@ import com.bean.data.Rune;
 import com.bean.dto.LoLCardDTO;
 import com.bean.dto.Summoner;
 import com.bean.dto.matchDTO;
+import com.bean.dto.matchPlayInfoDTO;
 import com.bean.dto.staticPlayerDataDTO;
 import com.bean.service.matchService;
 import com.bean.api.api_key;
@@ -34,6 +35,8 @@ public class LoLCardController {
 	
 	@Inject
 	private matchService service;
+	
+	boolean championIdTemp = false; // 테스트하는 테이블의 챔피언 ID가 맞는지를 체크하는 변수
 	
 	//-----------------------------------------------------------------------------------------
 	// LoLCard 메인 컨트롤러
@@ -332,6 +335,9 @@ public class LoLCardController {
 			}
 			
 		} // matchDetail for mychampion
+		
+	
+	
 	
 	
 }

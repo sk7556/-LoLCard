@@ -50,10 +50,10 @@
 		
 		<div class = "navbar_menu_div">
 			<ul class="navbar__menu">
-				<li class="navbar__menu__item" > 첫화면으로 </li>
+				<li class="navbar__menu__item" > Home </li>
 				<li class="navbar__menu__item" > LoLCard </li>
-				<li class="navbar__menu__item" > <a href="../positionData?"> 포지션 카드 </a></li>
-				<li class="navbar__menu__item" > 챔피언 카드 </li>
+				<li class="navbar__menu__item" > 포지션 <br> 카드 </li>
+				<li class="navbar__menu__item" > 챔피언 <br> 카드 </li>
 			</ul>
 		</div>
 		
@@ -66,11 +66,10 @@
 					<img src = ${profileImgURL } class = "profileImg">
 				</div>
 				<div class = "profile__right">
-					<h3> 소환사이름 </h3>
 					<h3> ${LoLCard.summonerName } </h3>
 					<hr>
-					<h3> 랭크 티어 - 점수</h3>
-					<h3> ${LoLCard.rank} 티어 : ${LoLCard.tier } 점수 : ${LoLCard.leaguePoints } </h3>
+					<h3> 랭크</h3>
+					<h3> ${LoLCard.tier } / ${LoLCard.rank} ${LoLCard.leaguePoints }점 </h3>
 					<hr>
 					<h3> 승 / 패 </h3>
 					<h3> ${LoLCard.wins } / ${LoLCard.losses } </h3>
@@ -112,7 +111,6 @@
 			</div>
 		</div>
 	</div>
-	
 	<div class = "footer">
 		<div>
 			<h3> 개발자 정보</h3>
@@ -121,6 +119,5 @@
 			<h3> 남정식 / sk7556@naver.com </h3>
 		</div>
 	</div>
-	
 </body>
 </html>

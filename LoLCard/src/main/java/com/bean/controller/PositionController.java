@@ -121,6 +121,8 @@ public class PositionController {
 		 int		firstTowerKill= 0;// 포탑 퍼블이 있을 경우 1점 없을 경우 5점
 		//--------------------------------------------------------
 		 
+		 System.out.println("테스트용용용 : 1 ");
+		 
 		 for(int i = 0; i < matchIdStringList.length; i++) {
 			 if(i < 30) { // 최대 30건까지만 검색. 입력하도록하자.
 				matchDetailSummonerName(matchIdStringList[i], summonerName);
@@ -348,13 +350,16 @@ public class PositionController {
 		System.out.println("************DTO정보리스트 : " + ChampDTO.toString());
 		model.addAttribute("laneData", ChampDTO);
 		model.addAttribute("mostPosition", mostPosition); // 포지션이름전송
-		String laneImg =  "resources/img/" + mostPosition + ".png";
+		String laneImg =  "resources/img/Position/" + mostPosition + ".png";
 		model.addAttribute("laneImg", laneImg);
+		model.addAttribute("summonerName", summonerName);
 	
 		} catch(Exception e){
 			System.out.println(e.getMessage());
 	} // End TryCatch
-		
+	
+	 System.out.println("테스트용용용 : ");
+	
 		// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<매치정보리스트
 		
 		
@@ -401,6 +406,8 @@ public class PositionController {
 		JsonParser jsonParser = new JsonParser();
 		JsonObject jsonResult = (JsonObject) jsonParser.parse(result);
 		JsonArray jsonParticipants = (JsonArray)jsonResult.get("participants");
+		
+		 System.out.println("테스트용용용 : 2 ");
 		
 		// position에 의해서 summonerName을 추출하는 부분
 		JsonArray jsonParticipantIdentities = (JsonArray)jsonResult.get("participantIdentities");
@@ -468,7 +475,9 @@ public class PositionController {
 			match.setFirstBloodKill(k.get("firstBloodKill").getAsBoolean());
 			match.setFirstTowerKill(k.get("firstTowerKill").getAsBoolean());
 			
-			service.insertMatchPlay(match); // DAO에 담아서 SQL에 기록.
+			service.insertMatchPlay(match); // matchPlayData에 기록
+			
+			System.out.println("입력완료 ******************************************************");
 			
 		} // End - For ( participants ) 
 	} catch (Exception e) {
@@ -476,7 +485,5 @@ public class PositionController {
 	}
 		
 	} // End SearchData
-	
-	
 	
 }

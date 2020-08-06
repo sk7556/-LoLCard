@@ -35,6 +35,11 @@
 	--animation-duration: 300ms;
 }
 
+hr {
+	margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
 body {
 	margin: 0;
 	font-family: 'Sunflower', sans-serif;
@@ -94,4 +99,8 @@ p {
 	font-weight: var(--font-regular);
 	color: var(--color-black);
 	margin:4px 0;
+}
+
+.centerAlign {
+	text-align : center;
 }

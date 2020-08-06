@@ -1,1 +1,137 @@
 @charset "UTF-8";
+
+.body {
+	text-align: center;
+}
+
+/* Navbar */
+
+#navbar {
+	transform: translateX(5px);
+	position: fixed;
+	width : 100%;
+	display: flex;
+	justify-content: space-between;
+	background-color: var(--color-orange);
+	opacity : 100%;
+	align-items: center; 
+	color : var(--color-white);
+	transition : all 500ms ease-in-out;
+	z-index : 1;
+}
+
+.navbar__menu {
+	display : flex;
+	width: 300px;
+}
+
+.navbar__logo {
+	padding : 0 30px 0 30px;
+	font-size: var(--font-medium);
+	font-weight: var(--weight-semi-bold);
+	color : var(--color-white);
+	align-items : center;
+	display : flex;
+	justify-content : space-around;
+}
+
+.navbar__menu__item {
+	padding : 8px 12px 0 12px;
+	margin : 0;
+	color : var(--color-white);
+	cursor : pointer;
+	border : 1px solid transparent;
+	border-radius : var(--size-border-radius);
+	flex-wrap: nowrap;
+	width : 120%;	
+}
+
+
+.navbar__menu__item:hover{
+	border: 1px solid var(--color-white);
+	background-color: var(--color-dark-pink);
+	border-radius: var(--size-border-radius);	
+	border-color : var(--color-white);
+}
+
+.blankMenu {
+	width : 150px;
+}
+
+.searchMenu {
+	margin : 0 50px 0 50px;
+}
+
+.position__Card{
+	padding : 80px 0 0 0;
+	display : flex;
+	justify-content : center;
+}
+
+.position__Data {
+	border : 5px solid var(--color-orange);	
+	border-radius :  20px;	
+}
+
+.nameAndSelect{
+	display : flex;
+	justify-content : space-between;
+}
+
+.position__Data{
+	margin : 20px auto 0 auto;
+}
+
+.summonerName {
+	padding-left: 30px;
+	padding-top: 10px;
+}
+
+.position__select {
+	padding-right: 30px;
+    padding-top: 10px;
+}
+
+.positionImg {
+	width : 80px;
+	height : 80px;
+	text-align : center;
+}
+
+.position__ImgName{
+	display :flex;
+	flex-direction : column;
+	align-items : center;
+}
+
+.tableDiv {
+	display :flex;
+	flex-direction : column;
+	align-items : center;
+    padding: 10px;
+}
+
+#position__table {
+	border: 3px solid var(--color-black);
+    border-radius: 5px;
+    border-collapse: collapse;
+    border-color: var(--color-orange);
+    text-align: center;
+}
+
+th, td {
+    border: 3px solid var(--color-orange);
+ }
+
+ .RadarChart {
+ 	max-width : 500px;
+ 	max-height : 500px;
+ 	margin : 20px;
+ }
+ 
+ #marksChart {
+
+	
+	
+}
+ 

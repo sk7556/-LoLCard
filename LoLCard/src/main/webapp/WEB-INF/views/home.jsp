@@ -54,7 +54,7 @@
 			</form>
 		</div>
 		<br><br>
-		<div>
+		<div class = "footer">
 			<div>
 				<h3> 개발자 정보</h3>
 			</div>
