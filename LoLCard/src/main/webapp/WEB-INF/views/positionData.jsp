@@ -6,11 +6,6 @@
 <head>
 	<meta charset="UTF-8">
 	<title> 포지션 카드 - ${mostPosition } </title>
-	<!-- 데이터리스트 -->
-	<!-- model.addAttribute("laneData", ChampDTO);	-->
-	<!-- model.addAttribute("mostPosition", mostPosition); // 포지션이름전송	-->
-	<!-- String laneImg =  "resources/img/" + mostPosition + ".png";	-->
-	<!-- model.addAttribute("langImg", laneImg);	-->
     
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="resources/css/bootstrap.css?after"> 

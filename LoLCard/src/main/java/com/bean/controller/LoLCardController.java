@@ -22,6 +22,7 @@ import com.bean.data.Item;
 import com.bean.data.Rune;
 import com.bean.dto.LoLCardDTO;
 import com.bean.dto.Summoner;
+import com.bean.dto.champTempDTO;
 import com.bean.dto.matchDTO;
 import com.bean.dto.matchPlayInfoDTO;
 import com.bean.dto.staticPlayerDataDTO;
@@ -249,6 +250,12 @@ public class LoLCardController {
 		Item item = new Item();
 		LoLCard.setMostItemName(item.setItemVal(LoLCard.getMostItem()));
 		
+		champTempDTO CT = new champTempDTO();
+		
+		// championData에 넘겨줄 베스트3 챔피언 목록을 저장
+		CT.setChampion_1(Champion.searchChampion(SPDto.getMostChampion_1()));
+		CT.setChampion_2(Champion.searchChampion(SPDto.getMostChampion_2()));
+		CT.setChampion_3(Champion.searchChampion(SPDto.getMostChampion_3()));
 		
 		System.out.println("롤카드상태보기 ************ : \n" + LoLCard.toString());
 		

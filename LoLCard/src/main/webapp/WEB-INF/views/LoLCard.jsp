@@ -6,11 +6,6 @@
 <head>
 	<meta charset="UTF-8">
 	<title>LoLCard - ${LoLCard.summonerName } </title>
-	
-	<!-- Required meta tags -->
-	<meta charset="utf-8">
-    	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title> 착한정식이의 홈페이지에 오신걸 환영합니다. </title>
     
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="resources/css/bootstrap.css?after"> 

@@ -5,41 +5,89 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>챔피언 카드 - ${championName } </title>
+	
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="resources/css/bootstrap.css?after"> 
+	
+	<!-- CSS -->
+	<link rel="stylesheet" href="resources/css/root.css">
+	<link rel="stylesheet" href="resources/css/LoLCardStyle.css">
+	<link rel="stylesheet" href="resources/css/LoLCardStyleMedia.css">
+	
+	<!-- JS -->
+	<script src = "resources/js/main.js" defer></script>	
+	
+	<!-- Font -->
+	<link href="https://fonts.googleapis.com/css2?family=Sunflower:wght@300;500;700&display=swap !important" rel="stylesheet">
 </head>
 <body>
-	<h1> 참피온데타 </h1>
+	<nav id = "navbar">
+		<div class="navbar__logo">
+			챔피언 카드 - ${championName }
+			<div class = "searchMenu">
+			<form id="searchWindow" action="/LoLCard" method="GET">
+				<div class="embed-submit-field">
+					<input type="text" placeholder="소환사이름" name="summonerName">
+					<button type="submit">검색!</button>
+				</div>
+			</form>
+			</div>
+		</div>
+		
+		<div class = "blankMenu"></div>
+		
+		<div class = "navbar_menu_div">
+			<ul class="navbar__menu">
+				<li class="navbar__menu__item" > Home </li>
+				<li class="navbar__menu__item" > LoLCard </li>
+				<li class="navbar__menu__item" > 포지션 <br> 카드 </li>
+				<li class="navbar__menu__item" > 챔피언 <br> 카드 </li>
+			</ul>
+		</div>
+		
+	</nav>
 	
-	<h2> 당신이 플레이한 챔피언 </h2>
-	<img src = "${championImg }">
-	<h2> ${championName }</h2>
-	<h2> 당신의 첫번째 업적 </h2>
-	<img src="resources/${championData.markFirstImg }">
-	<h3> ${championData.markFirstName }</h3>
-	<h3> ${championData.markFirstExplain }</h3>
-	<h2> 당신의 두번째 업적 </h2>
-	<img src="resources/${championData.markSecondImg }">
-	<h3> ${championData.markSecondName }</h3>
-	<h3> ${championData.markSecondExplain }</h3>
-	<h2> 당신의 세번째 업적 </h2>
-	<img src="resources/${championData.markThirdImg }">
-	<h3> ${championData.markThirdName }</h3>
-	<h3> ${championData.markThirdExplain }</h3>
-	
-	<h2> 당신의 성과 </h2>
-	<h3> 성장 </h3>
-	<h3> ${championData.rankResult_4 }	</h3>
-	<h3> 킬관여 	</h3>
-	<h3> ${championData.rankResult_5 }	</h3>
-	<h3> 시야점수	</h3>
-	<h3> ${championData.rankResult_6 }	</h3>
-	<h3> 오브젝트	</h3>
-	<h3> ${championData.rankResult_7 }	</h3>
-	<h3> 전투력	</h3>
-	<h3> ${championData.rankResult_8 }	</h3>
-	<h3> CC </h3>
-	<h3> ${championData.rankResult_9 } </h3>
-	
-	
+	<!-- 보여질 데이터 : summonerName, championSelect, championImg, championName, 
+	               mark123, markname, content, chart and score-->
+	<div class = "championData">
+		<div class = "champion__left">
+			<div class = "nameAndSelect">
+				<div class = "summonerName">
+					<h4>${summonerName }</h4> 
+				</div>
+				<div class = "champion_select">
+					<select name="position">
+					    <option class = "topPosition" value="TOP"> TOP </option>
+					    <option class = "junglePosition" value="JUNGLE"> JUNGLE </option>
+					    <option class = "midPosition" value="MID"> MID </option>
+					    <option class = "bottomPosition" value="BOTTOM"> BOTTOM </option>
+					</select>
+				</div>
+			</div> 
+			
+			<div class="centerAlign">
+				<img src = "${championImg }" class = "positionImg">
+			</div>
+			
+			<div class = "centerAlign">
+				<h4> ${championName }</h4>
+			</div>
+			
+		</div>
+		<div class = "champion__right">
+		
+		</div>
+			
+	</div> <!-- End championData -->
+			
+	<div class = "footer">
+		<div>
+			<h3> 개발자 정보</h3>
+		</div>
+		<div>
+			<h3> 남정식 / sk7556@naver.com </h3>
+		</div>
+	</div>
 </body>
 </html>

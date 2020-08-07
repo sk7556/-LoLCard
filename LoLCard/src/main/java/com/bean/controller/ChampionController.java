@@ -20,13 +20,14 @@ import com.bean.dto.champResultDTO;
 import com.bean.dto.matchInfoDTO;
 import com.bean.dto.matchPlayInfoDTO;
 import com.bean.service.matchService;
+import com.bean.controller.LoLCardController;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 // 챔피언의 데이터를 받아 매치 여러판의 데이터를 분석하는 컨트롤러
 @Controller
-public class MatchController {
+public class ChampionController {
 		
 	@Inject
 	private matchService service;
@@ -34,6 +35,7 @@ public class MatchController {
 	String API_KEY = api_key.API_KEY;
 	boolean championIdTemp = false; // 테스트하는 테이블의 챔피언 ID가 맞는지를 체크하는 변수
 	int AnlysisNum = 0; // 횟수 체크용 임시 변수
+	
 	
 	// championId, summonerName을 받으면 챔피언의 데이터 9개를 출력합니다.
 	//----------------------------------------------------------------
