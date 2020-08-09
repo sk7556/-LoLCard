@@ -19,6 +19,7 @@ import com.bean.data.Champion;
 import com.bean.dto.champResultDTO;
 import com.bean.dto.matchInfoDTO;
 import com.bean.dto.matchPlayInfoDTO;
+import com.bean.dto.staticPlayerDataDTO;
 import com.bean.service.matchService;
 import com.bean.controller.LoLCardController;
 import com.google.gson.JsonArray;
@@ -56,12 +57,13 @@ public class ChampionController {
 	//----------------------------------------------------------------
 	@RequestMapping(value="/championData", method=RequestMethod.GET)
 	public String champMatchDetail(Model model, HttpServletRequest httpServletRequest) {
-	
+		
 		VersionCheck.checkVersion();
 		BufferedReader br = null;
 		
 		String summonerName = httpServletRequest.getParameter("summonerName");
-		int	championId 	= Integer.parseInt(httpServletRequest.getParameter("championId"));
+		int	championId 	= Integer.parseInt(httpServletRequest.getParameter("mostChampion"));
+		String mostPosition	= httpServletRequest.getParameter("mostPosition");
 		
 		//----------------------------------------------------------------
 		// MatchV4 에서 받는 데이터
@@ -71,8 +73,10 @@ public class ChampionController {
 						
 		// Name 으로 accountId 찾기
 		String accountId = nameToAccount(summonerName);
+		System.out.println(accountId + "어카운트아이디테스트");
 		// Name 으로  matchId 찾기
 		String gameId = null; // gameId리스트가 들어갈 배열 생성
+		int inGameChampId = 0; // champion & myplaydata가 일치하는 배열 생성
 		matchInfoDTO MID = null;
 		int rankData[] = new int[43];
 		int rankResult[] = new int[10];	// 결과가 되는 변수값 3개 지정
@@ -132,12 +136,12 @@ public class ChampionController {
 			URL url = new URL(urlstr);
 			HttpURLConnection urlconnection = (HttpURLConnection) url.openConnection();
 			urlconnection.setRequestMethod("GET");
-			br = new BufferedReader(new InputStreamReader(urlconnection.getInputStream(),"UTF-8")); // 여기에 문자열을 받아와라.
+			br = new BufferedReader(new InputStreamReader(urlconnection.getInputStream(),"UTF-8")); 
 			
 			String result = "";
 			String line;
 			
-			while((line = br.readLine()) != null) { // 그 받아온 문자열을 계속 br에서 줄단위로 받고 출력하겠다.
+			while((line = br.readLine()) != null) { 
 				result = result + line;
 			}
 			
@@ -145,25 +149,26 @@ public class ChampionController {
 			JsonObject arr = (JsonObject)jsonObj.parse(result);
 			JsonArray jsonArr = (JsonArray)arr.get("matches");
 			
-			System.out.println("*************************소환사 이름 : " + summonerName +"\n" 
-								+ "매칭 정보 : " + jsonArr.toString());
+			// System.out.println("*************************소환사 이름 : " + summonerName +"\n" + "매칭 정보 : " + jsonArr.toString());
 			
 			for(int i=0; i<jsonArr.size(); i++) {
 				JsonObject k =  (JsonObject)jsonArr.get(i); 
+								
 				gameId	= k.get("gameId").getAsString();
+				inGameChampId = k.get("champion").getAsInt();
 				
-				System.out.println("*************게임아이디 출력 : " + gameId);
+				// System.out.println("*************게임아이디 출력 : " + gameId);
 				
 				// gameId마다 SQL에 데이터를 입력하기 
 				matchDetail(gameId, championId);
 				
 				// 여기 들어가기 전에 championId랑 myPlayData가 1인 테이블의 championId가 다르면 
 			
-			if(championIdTemp == true) { 
+			if(inGameChampId == championId && championIdTemp == true) { 
 				// 입력된 데이터를 기반으로 championStatic을 통해 matchPlayInfoDTO를 뽑아내서 순위 데이터 보기
 				MID = championStatic(gameId, championId);
 				
-				System.out.println("***********************MID기본정보" + MID.toString());
+				// System.out.println("***********************MID기본정보" + MID.toString());
 				
 		 		kills 				+= MID.getKills();
 		 		deaths 				+= MID.getDeaths();
@@ -233,7 +238,7 @@ public class ChampionController {
 		 		firstTowerKill += MID.getFirstTowerKill();// 포탑 퍼블이 있을 경우 1점 없을 경우 5점
 		 		
 		 		championIdTemp = false; // 챔피언 아이디 체크 초기화 
-		 		
+	 		
 		 		AnlysisNum++;
 			} // End 챔피언 데이터 비교
 		 } // End For
@@ -288,7 +293,8 @@ public class ChampionController {
 
 			//--------------------------------------------------------
 			
-			System.out.println("테스트테스트 " +
+			/*
+			 System.out.println("테스트테스트 " +
 					rankData[1] + "    " +
 					rankData[2] + "    " +
 					rankData[3] + "    " +
@@ -306,7 +312,7 @@ public class ChampionController {
 					
 					+ "추출한 횟수를 말해보렴" + AnlysisNum
 					);
-			
+			*/
 			 
 			// 출력이 되는 변수 3개 지정
 			// rankResult[1], rankResult[2], rankResult[3]
@@ -381,6 +387,10 @@ public class ChampionController {
 								rankResult[4], rankResult[5], rankResult[6],
 								rankResult[7], rankResult[8], rankResult[9]);
 			
+			
+			// 모스트 챔피언 3를 찾기 위한 메서드
+			selectChampionThree(summonerName);
+			
 		} catch(Exception e){
 			System.out.println(e.getMessage());
 		} // End TryCatch
@@ -391,10 +401,29 @@ public class ChampionController {
 		model.addAttribute("championName", Champion.searchChampion(championId)); // 챔피언 이름 전송
 		String ChampImg = "http://ddragon.leagueoflegends.com/cdn/10.14.1/img/champion/" + Champion.searchChampion(championId) + ".png";
 		model.addAttribute("championImg", ChampImg);
-		
+		model.addAttribute("mostChampion", championId);
+		model.addAttribute("champion1", champion1); // 챔피언1 네임 스트링
+		model.addAttribute("champion2", champion2); // 챔피언2 네임 스트링
+		model.addAttribute("champion3", champion3); // 챔피언3 네임 스트링
+		model.addAttribute("summonerName", summonerName);
+		model.addAttribute("mostPosition", mostPosition);
 		
 		return "championData";
 	} // End champMatchDetail Controller
+	
+	String champion1 = "";
+	String champion2 = "";
+	String champion3 = "";
+	
+	// 베스트 3 챔피언을 받아오는 메서드 
+	void selectChampionThree(String summonerName) {
+		staticPlayerDataDTO SPDto = new staticPlayerDataDTO();
+		SPDto = service.selectMatchData(summonerName); 
+		
+		champion1 = Champion.searchChampion(SPDto.getMostChampion_1());
+		champion2 = Champion.searchChampion(SPDto.getMostChampion_2());
+		champion3 = Champion.searchChampion(SPDto.getMostChampion_3());
+	}
 	
 	//----------------------------------------------------------------
 	// MatchV4 에서 받는 데이터

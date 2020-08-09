@@ -21,8 +21,9 @@
 }
 
 .navbar__menu {
-	display : flex;
-	width: 300px;
+	display: flex;
+    width: 450px;
+    justify-content: space-around;
 }
 
 .navbar__logo {
@@ -58,9 +59,15 @@
 	width : 150px;
 }
 
+.embed-submit-field {
+	font-size: 50%;
+}
+
 .searchMenu {
 	margin : 0 50px 0 50px;
 }
+
+/* position__CARD */
 
 .position__Card{
 	padding : 80px 0 0 0;
@@ -71,15 +78,12 @@
 .position__Data {
 	border : 5px solid var(--color-orange);	
 	border-radius :  20px;	
+	margin : 20px auto 0 auto;
 }
 
 .nameAndSelect{
 	display : flex;
 	justify-content : space-between;
-}
-
-.position__Data{
-	margin : 20px auto 0 auto;
 }
 
 .summonerName {

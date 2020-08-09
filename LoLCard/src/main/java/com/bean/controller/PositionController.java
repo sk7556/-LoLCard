@@ -34,6 +34,8 @@ public class PositionController {
 	String API_KEY = api_key.API_KEY;
 	
 	int AnlysisNum = 0; // 횟수 체크용 임시 변수
+	int mostChampion = 0;
+	boolean myPlayData = false;
 	
 	// Position위치, SummonerName을 받으면 해당 유저의 포지션 Most정보를 출력합니다.
 	//----------------------------------------------------------------
@@ -48,6 +50,8 @@ public class PositionController {
 		champResultDTO ChampDTO = null;		
 		String summonerName = httpServletRequest.getParameter("summonerName");
 		String mostPosition	= httpServletRequest.getParameter("mostPosition");
+		int mostChampion = Integer.parseInt(httpServletRequest.getParameter("mostChampion"));
+		this.mostChampion = mostChampion;
 		
 	try {
 		//-----------------------------------------------------------------
@@ -121,244 +125,250 @@ public class PositionController {
 		 int		firstTowerKill= 0;// 포탑 퍼블이 있을 경우 1점 없을 경우 5점
 		//--------------------------------------------------------
 		 
-		 System.out.println("테스트용용용 : 1 ");
+		 for(int i = 0; i < matchIdStringList.length; i++) {
+			 if(i < 20) {
+				 matchDetailSummonerName(matchIdStringList[i], summonerName);
+			 }
+		 }
 		 
 		 for(int i = 0; i < matchIdStringList.length; i++) {
-			 if(i < 30) { // 최대 30건까지만 검색. 입력하도록하자.
-				matchDetailSummonerName(matchIdStringList[i], summonerName);
-				 
-				// myPlayData가 true인 데이터의 순위를 구하자.
-				MID = laneStatic(matchIdStringList[i]);
-				 
-				System.out.println("***********************MID기본정보" + MID.toString());
-					
-		 		kills 				+= MID.getKills();
-		 		deaths 				+= MID.getDeaths();
-		 		assists 			+= MID.getAssists();
-		 		largestKillingSpree += MID.getLargestKillingSpree();
-		 		largestMultiKill 	+= MID.getLargestMultiKill();
-		 		killingSprees 		+= MID.getKillingSprees();
-		 		longestTimeSpentLiving += MID.getLongestTimeSpentLiving();
-		 		
-		 		// 더블킬-트리플킬-쿼드라킬-펜타킬은 등장하지 않는 경우가 발생할 수 있으므로 모두 0등이 될 수 있다. 
-		 		// 10명 모두 0등일 경우 모두 10점을 부여하여 하지 않는 것으로 간주한다.
-		 		if(MID.getDoubleKills() != 0)
-		 		{
-		 			doubleKills			+= MID.getDoubleKills();
-		 		} else {
-		 			doubleKills			+= 10; 
-		 		}
-		 		if(MID.getTripleKills() != 0)
-		 		{
-		 			tripleKills			+= MID.getTripleKills();
-		 		} else {
-		 			tripleKills			+= 10; 
-		 		}
-		 		if(MID.getQuadraKills() != 0)
-		 		{
-		 			quadraKills			+= MID.getQuadraKills();
-		 		} else {
-		 			quadraKills			+= 10; 
-		 		}
-		 		if(MID.getPentaKills() != 0)
-		 		{
-		 			pentaKills			+= MID.getPentaKills();
-		 		} else {
-		 			pentaKills			+= 10; 
-		 		}
-		 		
-		 		totalDamageDealt	+= MID.getTotalDamageDealt();
-		 		magicDamageDealt	+= MID.getMagicDamageDealt();	
-		 		physicalDamageDealt	+= MID.getPhysicalDamageDealt();
-		 		trueDamageDealt		+= MID.getTrueDamageDealt();
-		 		largestCriticalStrike += MID.getLargestCriticalStrike();
-		 		totalDamageDealtToChampions += MID.getTotalDamageDealtToChampions();
-		 		magicDamageDealtToChampions += MID.getMagicDamageDealtToChampions();
-		 		physicalDamageDealtToChampions += MID.getPhysicalDamageDealtToChampions();
-		 		trueDamageDealtToChampions += MID.getTrueDamageDealtToChampions();
-		 		totalHeal			+= MID.getTotalHeal();
-		 		totalUnitsHealed	+= 10;						// ---사용하지 않는 데이터
-		 		damageSelfMitigated += MID.getDamageSelfMitigated();
-		 		damageDealtToObjectives += MID.getDamageDealtToObjectives();
-		 		damageDealtToTurrets += MID.getDamageDealtToTurrets();
-		 		visionScore += MID.getVisionScore();
-		 		timeCCingOthers += MID.getTimeCCingOthers();
-		 		totalDamageTaken += MID.getTotalDamageTaken();
-		 		magicalDamageTaken += MID.getMagicalDamageTaken();
-		 		physicalDamageTaken += MID.getPhysicalDamageTaken();
-		 		trueDamageTaken += MID.getTrueDamageTaken();
-		 		goldEarned += MID.getGoldEarned();
-		 		turretKills += MID.getTurretKills();
-		 		inhibitorKills += MID.getInhibitorKills();
-		 		totalMinionsKilled += MID.getTotalMinionsKilled();
-		 		neutralMinionsKilledEnemyJungle += MID.getNeutralMinionsKilledEnemyJungle();
-		 		champLevel += MID.getChampLevel();
-		 		visionWardsBoughtInGame += 10; 				// ---사용하지 않는 데이터
-		 		wardsPlaced += 10;							// ---사용하지 않는 데이터
-		 		wardsKilled += MID.getWardsKilled();
-		 		firstBloodKill += MID.getFirstBloodKill();// 퍼블이 있을 경우 1점 없을 경우 5점
-		 		firstTowerKill += MID.getFirstTowerKill();// 포탑 퍼블이 있을 경우 1점 없을 경우 5점
-		 		
-		 		AnlysisNum++;	
-			 } 
+			 if(i < 20) {
+				 myPlayData = false; // 초기화 
+				 matchDetailSummonerName(matchIdStringList[i], summonerName);
+					// myPlayData가 true인 데이터의 순위를 구하자.
+					 
+					 if(myPlayData = true) {
+						 MID = laneStatic(matchIdStringList[i]);
+					 
+						System.out.println("***********************MID기본정보" + MID.toString());
+							
+				 		kills 				+= MID.getKills();
+				 		deaths 				+= MID.getDeaths();
+				 		assists 			+= MID.getAssists();
+				 		largestKillingSpree += MID.getLargestKillingSpree();
+				 		largestMultiKill 	+= MID.getLargestMultiKill();
+				 		killingSprees 		+= MID.getKillingSprees();
+				 		longestTimeSpentLiving += MID.getLongestTimeSpentLiving();
+				 		
+				 		// 더블킬-트리플킬-쿼드라킬-펜타킬은 등장하지 않는 경우가 발생할 수 있으므로 모두 0등이 될 수 있다. 
+				 		// 10명 모두 0등일 경우 모두 10점을 부여하여 하지 않는 것으로 간주한다.
+				 		if(MID.getDoubleKills() != 0)
+				 		{
+				 			doubleKills			+= MID.getDoubleKills();
+				 		} else {
+				 			doubleKills			+= 10; 
+				 		}
+				 		if(MID.getTripleKills() != 0)
+				 		{
+				 			tripleKills			+= MID.getTripleKills();
+				 		} else {
+				 			tripleKills			+= 10; 
+				 		}
+				 		if(MID.getQuadraKills() != 0)
+				 		{
+				 			quadraKills			+= MID.getQuadraKills();
+				 		} else {
+				 			quadraKills			+= 10; 
+				 		}
+				 		if(MID.getPentaKills() != 0)
+				 		{
+				 			pentaKills			+= MID.getPentaKills();
+				 		} else {
+				 			pentaKills			+= 10; 
+				 		}
+				 		
+				 		totalDamageDealt	+= MID.getTotalDamageDealt();
+				 		magicDamageDealt	+= MID.getMagicDamageDealt();	
+				 		physicalDamageDealt	+= MID.getPhysicalDamageDealt();
+				 		trueDamageDealt		+= MID.getTrueDamageDealt();
+				 		largestCriticalStrike += MID.getLargestCriticalStrike();
+				 		totalDamageDealtToChampions += MID.getTotalDamageDealtToChampions();
+				 		magicDamageDealtToChampions += MID.getMagicDamageDealtToChampions();
+				 		physicalDamageDealtToChampions += MID.getPhysicalDamageDealtToChampions();
+				 		trueDamageDealtToChampions += MID.getTrueDamageDealtToChampions();
+				 		totalHeal			+= MID.getTotalHeal();
+				 		totalUnitsHealed	+= 10;						// ---사용하지 않는 데이터
+				 		damageSelfMitigated += MID.getDamageSelfMitigated();
+				 		damageDealtToObjectives += MID.getDamageDealtToObjectives();
+				 		damageDealtToTurrets += MID.getDamageDealtToTurrets();
+				 		visionScore += MID.getVisionScore();
+				 		timeCCingOthers += MID.getTimeCCingOthers();
+				 		totalDamageTaken += MID.getTotalDamageTaken();
+				 		magicalDamageTaken += MID.getMagicalDamageTaken();
+				 		physicalDamageTaken += MID.getPhysicalDamageTaken();
+				 		trueDamageTaken += MID.getTrueDamageTaken();
+				 		goldEarned += MID.getGoldEarned();
+				 		turretKills += MID.getTurretKills();
+				 		inhibitorKills += MID.getInhibitorKills();
+				 		totalMinionsKilled += MID.getTotalMinionsKilled();
+				 		neutralMinionsKilledEnemyJungle += MID.getNeutralMinionsKilledEnemyJungle();
+				 		champLevel += MID.getChampLevel();
+				 		visionWardsBoughtInGame += 10; 				// ---사용하지 않는 데이터
+				 		wardsPlaced += 10;							// ---사용하지 않는 데이터
+				 		wardsKilled += MID.getWardsKilled();
+				 		firstBloodKill += MID.getFirstBloodKill();// 퍼블이 있을 경우 1점 없을 경우 5점
+				 		firstTowerKill += MID.getFirstTowerKill();// 포탑 퍼블이 있을 경우 1점 없을 경우 5점
+				 		
+				 		AnlysisNum++;	
+					 }
+			 }
 		 }	// End For - 데이터 입력 및 분석 최대 30건
 		 
-		// **** 출력부
-			
-		//--------------------------------------------------------
-		// 데이터를 랭크 매기기 위해 배열로 작성
-		 rankData[0] =      99999; // 비교용 데이터
-		 rankData[1] =		kills;		
-		 rankData[2] =		deaths;
-		 rankData[3] =		assists;
-		 rankData[4] =		largestKillingSpree;
-		 rankData[5] =		largestMultiKill;
-		 rankData[6] =		killingSprees;
-		 rankData[7] =		longestTimeSpentLiving;
-		 rankData[8] =		doubleKills;
-		 rankData[9] =		tripleKills;
-		 rankData[10] =		quadraKills;
-		 rankData[11] =		pentaKills;
-		 rankData[12] =		totalDamageDealt;
-		 rankData[13] =		magicDamageDealt;
-		 rankData[14] =		physicalDamageDealt;
-		 rankData[15] =		trueDamageDealt;
-		 rankData[16] =		largestCriticalStrike;
-		 rankData[17] =		totalDamageDealtToChampions;
-		 rankData[18] =		magicDamageDealtToChampions;
-		 rankData[19] =		physicalDamageDealtToChampions;
-		 rankData[20] =		trueDamageDealtToChampions;
-		 rankData[21] =		totalHeal;					 
-		 rankData[22] =		totalUnitsHealed;
-		 rankData[23] =		damageSelfMitigated;
-		 rankData[24] =		damageDealtToObjectives;
-		 rankData[25] =		damageDealtToTurrets;
-		 rankData[26] =		visionScore; 
-		 rankData[27] =		timeCCingOthers;
-		 rankData[28] =		totalDamageTaken; 
-		 rankData[29] =		magicalDamageTaken;
-		 rankData[30] =		physicalDamageTaken;
-		 rankData[31] =		trueDamageTaken;
-		 rankData[32] =		goldEarned;
-		 rankData[33] =		turretKills;
-		 rankData[34] =		inhibitorKills;
-		 rankData[35] =		totalMinionsKilled; 
-		 rankData[36] =		neutralMinionsKilledEnemyJungle;
-		 rankData[37] =		champLevel;
-		 rankData[38] =		visionWardsBoughtInGame; 
-		 rankData[39] =		wardsPlaced;
-		 rankData[40] =		wardsKilled;
-		 rankData[41] =		firstBloodKill;// 퍼블이 있을 경우 1점 없을 경우 5점
-		 rankData[42] =		firstTowerKill;// 포탑 퍼블이 있을 경우 1점 없을 경우 5점
-
-		//--------------------------------------------------------
-		
-		System.out.println("테스트테스트 " +
-				rankData[1] + "    " +
-				rankData[2] + "    " +
-				rankData[3] + "    " +
-				rankData[4] + "    " +
-				rankData[5] + "    " +
-				rankData[6] + "    " +
-				rankData[7] + "    " +
-				rankData[8] + "    " +
-				rankData[9] + "    " +
-				rankData[10] + "    " +
-				rankData[11] + "    " +
-				rankData[12] + "    " +
-				rankData[13] + "    " +
-				rankData[14] + "    "
+			// **** 출력부
 				
-				+ "추출한 횟수를 말해보렴" + AnlysisNum
-				);
-		
-		 
-		// 출력이 되는 변수 3개 지정
-		// rankResult[1], rankResult[2], rankResult[3]
-		// 제일 작은 값부터 1,2,3을 지정한다 ( 순위 데이터이므로 낮은게 더 우월한 수치 ) 
-		 
-		int min = 99999; // 최소값 기대치
-		int minNum = 0; // 최소값의 번호
-		 
-		for(int i = 0 ; i < rankData.length; i++) {
-			if(min > rankData[i]) {
-				min = rankData[i];
-				minNum = i;			// 최소값에 해당하는 rankData의 ID를 기록
-			}
-		}
-		
-		rankResult[1] = minNum; 	// 첫번째 성적을 min으로 지정
-		min = 1000; 				// min 초기화
-		minNum = 0;				// minNum 초기화
-		rankData[rankResult[1]] = 100; // 기존 최소값을 최대 값으로 변경;
-		 
-		 for(int i = 0 ; i < rankData.length; i++) {
-			if(min > rankData[i]) {
-				min = rankData[i];
-				minNum = i;			// 최소값에 해당하는 rankData의 ID를 기록
-			}
-		 }
-		
-		rankResult[2] = minNum; 	// 두번째 성적을 min으로 지정
-		min = 1000; 					// min 초기화
-		minNum = 0;					// minNum 초기화
-		rankData[rankResult[2]] = 100; // 기존 최소값을 최대 값으로 변경;
-		 
-		for(int i = 0 ; i < rankData.length; i++) {
-			if(min > rankData[i]) {
-				min = rankData[i];
-				minNum = i;			// 최소값에 해당하는 rankData의 ID를 기록
-			}
-		}
-		
-		rankResult[3] = minNum; 	// 세번째 성적을 min으로 지정
-		
-		// rankResult[4~9]를 마련하자.
-		// 10에서 뺀 값을 주어 값을 확인해보자. 
-		// 성장		
-		rankResult[4] = (int)(10 - (champLevel + goldEarned)/(2 * AnlysisNum));
-		// 킬관여
-		rankResult[5] = (int)(10 - (kills + assists + killingSprees) / (3 * AnlysisNum));
-		// 시야 점수
-		rankResult[6] = (int)(10 - (visionScore + visionWardsBoughtInGame + wardsPlaced + wardsKilled)/(4*AnlysisNum));
-		// 오브젝트
-		rankResult[7] = (int)(10 - (damageDealtToObjectives + 
-						damageDealtToTurrets + 
-						turretKills + 
-						inhibitorKills + firstTowerKill) / (5*AnlysisNum));
-		// 전투력
-		rankResult[8] = (int)(10 - (kills 
-						+ assists 
-						+ killingSprees 
-						+ totalDamageDealt 
-						+ totalHeal 
-						+ damageSelfMitigated 
-						+ totalDamageTaken) / (7*AnlysisNum)) ;
-		// CC
-		rankResult[9] = (int)(10 - timeCCingOthers / AnlysisNum);
+			//--------------------------------------------------------
+			// 데이터를 랭크 매기기 위해 배열로 작성
+			 rankData[0] =      99999; // 비교용 데이터
+			 rankData[1] =		kills;		
+			 rankData[2] =		deaths;
+			 rankData[3] =		assists;
+			 rankData[4] =		largestKillingSpree;
+			 rankData[5] =		largestMultiKill;
+			 rankData[6] =		killingSprees;
+			 rankData[7] =		longestTimeSpentLiving;
+			 rankData[8] =		doubleKills;
+			 rankData[9] =		tripleKills;
+			 rankData[10] =		quadraKills;
+			 rankData[11] =		pentaKills;
+			 rankData[12] =		totalDamageDealt;
+			 rankData[13] =		magicDamageDealt;
+			 rankData[14] =		physicalDamageDealt;
+			 rankData[15] =		trueDamageDealt;
+			 rankData[16] =		largestCriticalStrike;
+			 rankData[17] =		totalDamageDealtToChampions;
+			 rankData[18] =		magicDamageDealtToChampions;
+			 rankData[19] =		physicalDamageDealtToChampions;
+			 rankData[20] =		trueDamageDealtToChampions;
+			 rankData[21] =		totalHeal;					 
+			 rankData[22] =		totalUnitsHealed;
+			 rankData[23] =		damageSelfMitigated;
+			 rankData[24] =		damageDealtToObjectives;
+			 rankData[25] =		damageDealtToTurrets;
+			 rankData[26] =		visionScore; 
+			 rankData[27] =		timeCCingOthers;
+			 rankData[28] =		totalDamageTaken; 
+			 rankData[29] =		magicalDamageTaken;
+			 rankData[30] =		physicalDamageTaken;
+			 rankData[31] =		trueDamageTaken;
+			 rankData[32] =		goldEarned;
+			 rankData[33] =		turretKills;
+			 rankData[34] =		inhibitorKills;
+			 rankData[35] =		totalMinionsKilled; 
+			 rankData[36] =		neutralMinionsKilledEnemyJungle;
+			 rankData[37] =		champLevel;
+			 rankData[38] =		visionWardsBoughtInGame; 
+			 rankData[39] =		wardsPlaced;
+			 rankData[40] =		wardsKilled;
+			 rankData[41] =		firstBloodKill;// 퍼블이 있을 경우 1점 없을 경우 5점
+			 rankData[42] =		firstTowerKill;// 포탑 퍼블이 있을 경우 1점 없을 경우 5점
+	
+			//--------------------------------------------------------
 			
-		//***************************************************************		
-		// DTO에 정보를 넣어서 모델로 보내버립시다.
-		// DTO : ChampDTO ( rankResult의 변수 9개 ) 
-		//***************************************************************		
+			System.out.println("테스트테스트 " +
+					rankData[1] + "    " +
+					rankData[2] + "    " +
+					rankData[3] + "    " +
+					rankData[4] + "    " +
+					rankData[5] + "    " +
+					rankData[6] + "    " +
+					rankData[7] + "    " +
+					rankData[8] + "    " +
+					rankData[9] + "    " +
+					rankData[10] + "    " +
+					rankData[11] + "    " +
+					rankData[12] + "    " +
+					rankData[13] + "    " +
+					rankData[14] + "    "
+					
+					+ "추출한 횟수를 말해보렴" + AnlysisNum
+					);
+			
+			 
+			// 출력이 되는 변수 3개 지정
+			// rankResult[1], rankResult[2], rankResult[3]
+			// 제일 작은 값부터 1,2,3을 지정한다 ( 순위 데이터이므로 낮은게 더 우월한 수치 ) 
+			 
+			int min = 99999; // 최소값 기대치
+			int minNum = 0; // 최소값의 번호
+			 
+			for(int i = 0 ; i < rankData.length; i++) {
+				if(min > rankData[i]) {
+					min = rankData[i];
+					minNum = i;			// 최소값에 해당하는 rankData의 ID를 기록
+				}
+			}
+			
+			rankResult[1] = minNum; 	// 첫번째 성적을 min으로 지정
+			min = 1000; 				// min 초기화
+			minNum = 0;				// minNum 초기화
+			rankData[rankResult[1]] = 100; // 기존 최소값을 최대 값으로 변경;
+			 
+			 for(int i = 0 ; i < rankData.length; i++) {
+				if(min > rankData[i]) {
+					min = rankData[i];
+					minNum = i;			// 최소값에 해당하는 rankData의 ID를 기록
+				}
+			 }
+			
+			rankResult[2] = minNum; 	// 두번째 성적을 min으로 지정
+			min = 1000; 					// min 초기화
+			minNum = 0;					// minNum 초기화
+			rankData[rankResult[2]] = 100; // 기존 최소값을 최대 값으로 변경;
+			 
+			for(int i = 0 ; i < rankData.length; i++) {
+				if(min > rankData[i]) {
+					min = rankData[i];
+					minNum = i;			// 최소값에 해당하는 rankData의 ID를 기록
+				}
+			}
+			
+			rankResult[3] = minNum; 	// 세번째 성적을 min으로 지정
+			
+			// rankResult[4~9]를 마련하자.
+			// 10에서 뺀 값을 주어 값을 확인해보자. 
+			// 성장		
+			rankResult[4] = (int)(10 - (champLevel + goldEarned)/(2 * AnlysisNum));
+			// 킬관여
+			rankResult[5] = (int)(10 - (kills + assists + killingSprees) / (3 * AnlysisNum));
+			// 시야 점수
+			rankResult[6] = (int)(10 - (visionScore + visionWardsBoughtInGame + wardsPlaced + wardsKilled)/(4*AnlysisNum));
+			// 오브젝트
+			rankResult[7] = (int)(10 - (damageDealtToObjectives + 
+							damageDealtToTurrets + 
+							turretKills + 
+							inhibitorKills + firstTowerKill) / (5*AnlysisNum));
+			// 전투력
+			rankResult[8] = (int)(10 - (kills 
+							+ assists 
+							+ killingSprees 
+							+ totalDamageDealt 
+							+ totalHeal 
+							+ damageSelfMitigated 
+							+ totalDamageTaken) / (7*AnlysisNum)) ;
+			// CC
+			rankResult[9] = (int)(10 - timeCCingOthers / AnlysisNum);
+				
+			//***************************************************************		
+			// DTO에 정보를 넣어서 모델로 보내버립시다.
+			// DTO : ChampDTO ( rankResult의 변수 9개 ) 
+			//***************************************************************		
+			
+			ChampDTO = new champResultDTO(rankResult[1], rankResult[2], rankResult[3],
+								rankResult[4], rankResult[5], rankResult[6],
+								rankResult[7], rankResult[8], rankResult[9]); 
+			
+			
+			System.out.println("************DTO정보리스트 : " + ChampDTO.toString());
+			model.addAttribute("laneData", ChampDTO);
+			model.addAttribute("mostPosition", mostPosition); // 포지션이름전송
+			String laneImg =  "resources/img/Position/" + mostPosition + ".png";
+			model.addAttribute("laneImg", laneImg);
+			model.addAttribute("summonerName", summonerName);
+			model.addAttribute("mostChampion", mostChampion);
 		
-		ChampDTO = new champResultDTO(rankResult[1], rankResult[2], rankResult[3],
-							rankResult[4], rankResult[5], rankResult[6],
-							rankResult[7], rankResult[8], rankResult[9]); 
-		
-		
-		System.out.println("************DTO정보리스트 : " + ChampDTO.toString());
-		model.addAttribute("laneData", ChampDTO);
-		model.addAttribute("mostPosition", mostPosition); // 포지션이름전송
-		String laneImg =  "resources/img/Position/" + mostPosition + ".png";
-		model.addAttribute("laneImg", laneImg);
-		model.addAttribute("summonerName", summonerName);
-	
-		} catch(Exception e){
-			System.out.println(e.getMessage());
-	} // End TryCatch
-	
-	 System.out.println("테스트용용용 : ");
+			} catch(Exception e){
+				System.out.println(e.getMessage());
+		} // End TryCatch
 	
 		// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<매치정보리스트
 		
@@ -383,6 +393,7 @@ public class PositionController {
 	//----------------------------------------------------------------
 	public void matchDetailSummonerName(String matchId, String summonerName) {
 		
+	
 	VersionCheck.checkVersion();
 	BufferedReader br = null;
 	
@@ -399,7 +410,7 @@ public class PositionController {
 		String result = "";
 		String line;
 		
-		while((line = br.readLine()) != null) { // 그 받아온 문자열을 계속 br에서 줄단위로 받고 출력하겠다.
+		while((line = br.readLine()) != null) { 
 			result = result + line;
 		} 
 		
@@ -407,24 +418,24 @@ public class PositionController {
 		JsonObject jsonResult = (JsonObject) jsonParser.parse(result);
 		JsonArray jsonParticipants = (JsonArray)jsonResult.get("participants");
 		
-		 System.out.println("테스트용용용 : 2 ");
-		
 		// position에 의해서 summonerName을 추출하는 부분
 		JsonArray jsonParticipantIdentities = (JsonArray)jsonResult.get("participantIdentities");
 		for(int i = 0; i < jsonParticipantIdentities.size(); i++) {
 			JsonObject playerSearch =  (JsonObject)jsonParticipantIdentities.get(i);
 			JsonObject p	=  (JsonObject)playerSearch.get("player");
 			
-			boolean myPlayData = false;
+			myPlayData = false;	
 			
 			nameTemp = p.get("summonerName").getAsString();
-			if(nameTemp.equals(summonerName)) {
+			System.out.println("summonerName : " + nameTemp);
+			if(nameTemp.equalsIgnoreCase(summonerName)) {
+				System.out.println("마이플레이데이터트루################################");
 				myPlayData = true;
 			}
 			JsonObject arr3 =  (JsonObject)jsonParticipants.get(i);
 			JsonObject k	=  (JsonObject)arr3.get("stats");
 			
-			System.out.println("*************stats분리테스트 : " + k.toString());
+			// System.out.println("*************stats분리테스트 : " + k.toString());
 			
 			matchPlayInfoDTO match = new matchPlayInfoDTO();
 			

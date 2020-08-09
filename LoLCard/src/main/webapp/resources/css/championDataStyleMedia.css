@@ -1,0 +1,48 @@
+@charset "UTF-8";
+
+@media screen and (max-width: 768px){
+	
+	.body { 
+		font-size : 80%;
+	}
+	
+	#navbar {
+		justify-content: space-between;
+		flex-direction : column;
+	}
+	
+	.embed-submit-field {
+		width : 100%;
+	    padding: 15px;
+	    height: 50%;
+	    font-size: 50%;
+	}
+		
+	.navbar__menu {
+	}
+	
+	.blankMenu {
+		display : none;
+	}
+	
+	.embed-submit-field button {
+	    right: -40px;
+	    top: 20px;
+	}
+	
+	.championData{
+		
+		flex-direction : column;
+		
+	}
+	
+	.champion__left {
+		margin: 100px auto 0 auto;
+		width : 400px;
+	}
+	
+	.champion__right {
+		margin: 10px auto;
+		width : 400px;
+	}
+}

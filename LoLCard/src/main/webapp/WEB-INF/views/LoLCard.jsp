@@ -34,21 +34,15 @@
 			</form>
 			</div>
 		</div>
-		
-		<!-- Toggle button -->
-			<!-- 	<h3> 세로 형식으로 변환  </h3> -->
-			<!-- 	<button class="navbar__toggle-btn"> -->
-			<!-- 		<i class="fas fa-address-card"></i> -->
-		<!-- 	</button> -->
-		
+				
 		<div class = "blankMenu"></div>
 		
 		<div class = "navbar_menu_div">
 			<ul class="navbar__menu">
-				<li class="navbar__menu__item" > Home </li>
-				<li class="navbar__menu__item" > LoLCard </li>
-				<li class="navbar__menu__item" > 포지션 <br> 카드 </li>
-				<li class="navbar__menu__item" > 챔피언 <br> 카드 </li>
+				<li class="navbar__menu__item" > <a href = "../" > Home </a> </li>
+				<li class="navbar__menu__item" > <a href = "../LoLCard?summonerName=${LoLCard.summonerName }" > LoLCard </a> </li>
+				<li class="navbar__menu__item" > <a href = "../positionData?summonerName=${LoLCard.summonerName }&mostPosition=${LoLCard.mostPosition }&mostChampion=${LoLCard.mostChampion1}" > 포지션 </a> <br> 카드 </li>
+				<li class="navbar__menu__item" > <a href = "../championData?summonerName=${LoLCard.summonerName }&mostChampion=${LoLCard.mostChampion1 }&mostPosition=${LoLCard.mostPosition }" > 챔피언 </a> <br> 카드 </li>
 			</ul>
 		</div>
 		
@@ -80,16 +74,22 @@
 		<div class = "lolcard__right">
 			<h3 align = "center"> 모스트 챔피언 </h3>
 			<div class = "mostChampion">
-				<div class = "championList">
-					<img src = ${LoLCard.mostChampion1Img } class = "championImg">
+				<div class = "championList"> 
+					<a href="../championData?summonerName=${LoLCard.summonerName }&championId=${LoLCard.mostChampion1 }&mostPosition=${LoLCard.mostPosition }" >
+						<img src = ${LoLCard.mostChampion1Img } class = "championImg">
+					</a>
 					<h3> ${LoLCard.mostChampName1 } </h3>
 				</div>
 				<div class = "championList">
-					<img src = ${LoLCard.mostChampion2Img } class = "championImg">
+					<a href="../championData?summonerName=${LoLCard.summonerName }&championId=${LoLCard.mostChampion1 }&mostPosition=${LoLCard.mostPosition }" >
+						<img src = ${LoLCard.mostChampion2Img } class = "championImg">
+					</a>
 					<h3> ${LoLCard.mostChampName2 } </h3>
 				</div>
 				<div class = "championList">
-					<img src = ${LoLCard.mostChampion3Img } class = "championImg">
+					<a href="../championData?summonerName=${LoLCard.summonerName }&championId=${LoLCard.mostChampion1 }&mostPosition=${LoLCard.mostPosition }" >
+						<img src = ${LoLCard.mostChampion3Img } class = "championImg">
+					</a>
 					<h3> ${LoLCard.mostChampName3 } </h3>
 				</div>
 			</div>
@@ -106,7 +106,7 @@
 			</div>
 		</div>
 	</div>
-	<div class = "footer">
+	<div class = "footer" style=" text-align: center; ">
 		<div>
 			<h3> 개발자 정보</h3>
 		</div>

@@ -47,12 +47,15 @@
 	width : 120%;	
 }
 
-
 .navbar__menu__item:hover{
 	border: 1px solid var(--color-white);
 	background-color: var(--color-dark-pink);
 	border-radius: var(--size-border-radius);	
 	border-color : var(--color-white);
+}
+
+.embed-submit-field {
+	font-size: 50%;
 }
 
 .blankMenu {
@@ -63,109 +66,92 @@
 	margin : 0 50px 0 50px;
 }
 
-.lolcard{
+.mark__div {
+	text-align: center;
+}
+
+
+/* 챔피언 데이터 */
+
+.championData{
 	padding : 80px 0 0 0;
 	display : flex;
 	justify-content : center;	
 }
 
-.embed-submit-field {
-	font-size: 50%;
-}
-/* LoLCard - left */
+/* 챔피언 데이터 레프트 */
 
-.lolcard__left{
-	margin : 40px 50px 40px 50px;
-	width : 500px;
+.champion__left{
+	width : 600px;
 	border : 5px solid var(--color-orange);	
-	border-radius :  20px;
+	border-radius :  20px;	
+	margin : 10px;
 }
 
-.profile {
+.nameAndSelect {
+	display : flex;
+	justify-content : space-between;
+	padding : 10px;
+}
+
+.summonerName {
+	align-items : center;
+}
+
+.markTitle {
+	padding : 0 0 0 20px;
+}
+
+.mark__List {
 	display : flex;
 	justify-content : space-around;
 }
 
-.profile__left {
-	align-items : center;
-	display : flex;
-}
-
-.profile__right{
-	margin : 30px 0 0 0 ;
-	padding : 10px;
-}
-
-.profileImg{
-	width : 200px;
-	height : 200px;
-	border-radius : 10%;
-	padding : 10px;
-	border-radius : 20%;
-}
-
-/* LoLCard - right */
-
-.lolcard__right {	
-	width : 500px;
-	margin : 40px 50px 0 0;
-	border : 5px solid var(--color-orange);	
+.markImg {   /* 이미지 */
+	width : 70px;
+	height : 70px;
 	border-radius : 20px;
 }
 
-.mostChampion {
-	display : flex;
-	justify-content: center;
-}
-
-.championList {
-	padding :10px;
-	text-align : center;
-}
-
-.mostRune {
-	padding: 10px;
-    align-items: center;
-    display: flex;
-}
-
-.mostItem {
-	padding : 10px;	
-	justify-content : center;
-	text-align: center;
-}
-
-.mostPosition{
-	padding: 10px;
-    margin: 10px 50px;
-    text-align: center;
-    border: 5px solid var(--color-orange);
-    border-radius: 10px;
-}
-
-.positionImg{
+.markName {
 	padding : 10px;
-	width : 100px;
-	height : 100px;
-	position : center;
 }
 
-.championImg{
-	width : 60px;
-	height : 60px;
-	border-radius : 50%;
+/* 챔피언 데이터 라이트 */
+
+.champion__right{
+	width : 600px;
+	border : 5px solid var(--color-orange);	
+	border-radius :  20px;	
+	margin : 10px;
 }
 
-.contentTitle {
-	display: flex;
-    flex-wrap: wrap;
+#champion__table {
+	border: 3px solid var(--color-black);
+    border-radius: 5px;
+    border-collapse: collapse;
+    border-color: var(--color-orange);
     text-align: center;
-    padding: 20px;
+}
+
+th, td {
+    border: 3px solid var(--color-orange);
+ }
+
+.RadarChart {
+	
+}
+
+.marksChart {
+	
+}
+
+.tableDiv {
+	display: flex;
+    justify-content: center;
+    padding : 10px;
 }
 
 .footer {
 	text-align : center;
 }
-
-
-

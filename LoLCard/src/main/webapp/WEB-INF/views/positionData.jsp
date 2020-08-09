@@ -43,10 +43,10 @@
 		
 		<div class = "navbar_menu_div">
 			<ul class="navbar__menu">
-				<li class="navbar__menu__item" > Home </li>
-				<li class="navbar__menu__item" > LoLCard </li>
-				<li class="navbar__menu__item" > 포지션 <br> 카드 </li>
-				<li class="navbar__menu__item" > 챔피언 <br> 카드 </li>
+				<li class="navbar__menu__item" > <a href = "../" > Home </a> </li>
+				<li class="navbar__menu__item" > <a href = "../LoLCard?summonerName=${summonerName }" > LoLCard </a> </li>
+				<li class="navbar__menu__item" > <a href = "../positionData?summonerName=${summonerName }&mostPosition=${mostPosition }&mostChampion=${mostChampion}" > 포지션 </a> <br> 카드 </li>
+				<li class="navbar__menu__item" > <a href = "../championData?summonerName=${summonerName }&mostChampion=${mostChampion }&mostPosition=${mostPosition }"> 챔피언 </a> <br> 카드 </li>
 			</ul>
 		</div>
 	</nav>
@@ -56,14 +56,18 @@
 			<div class = "nameAndSelect">
 				<div class = "summonerName">
 					<!-- 해당 포지션 정보의 경우 반드시 대문자로 받아야한다. -->
-					<h4>${summonerName } - ${mostPosition }</h4> 
+					<h3>${summonerName } - ${mostPosition }</h3> 
 				</div>
 				<div class = "position__select">
 					<select name="position">
-					    <option class = "topPosition" value="TOP"> TOP </option>
-					    <option class = "junglePosition" value="JUNGLE"> JUNGLE </option>
-					    <option class = "midPosition" value="MID"> MID </option>
-					    <option class = "bottomPosition" value="BOTTOM"> BOTTOM </option>
+					    <option class = "topPosition" <c:if test = "${mostPosition }"> selected </c:if>
+					    onchange = "if(this.value) location.href=(this.value);" value= "../positionData?summonerName=${summonerName }&mostPosition=TOP&mostChampion=${mostChampion}"> TOP </option>
+					    <option class = "junglePosition"  <c:if test = "${mostPosition }"> selected </c:if>
+					    onchange = "if(this.value) location.href=(this.value);" value= "../positionData?summonerName=${summonerName }&mostPosition=JUNGLE&mostChampion=${mostChampion}"> JUNGLE </option>
+					    <option class = "midPosition"  <c:if test = "${mostPosition }"> selected </c:if>
+					    onchange = "if(this.value) location.href=(this.value);" value= "../positionData?summonerName=${summonerName }&mostPosition=MID&mostChampion=${mostChampion}"> MID </option>
+					    <option class = "bottomPosition" <c:if test = "${mostPosition }"> selected </c:if>
+					    onchange = "if(this.value) location.href=(this.value);" value= "../positionData?summonerName=${summonerName }&mostPosition=BOTTOM&mostChampion=${mostChampion}"> BOTTOM </option>
 					</select>
 				</div>
 			</div> 
