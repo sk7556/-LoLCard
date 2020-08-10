@@ -18,6 +18,9 @@
 	<!-- JS -->
 	<script src = "resources/js/main.js" defer></script>
 	<script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdn.rawgit.com/eligrey/FileSaver.js/5ed507ef8aa53d8ecfea96d96bc7214cd2476fd2/FileSaver.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.js"></script>
 	
 	<!-- Font -->
 	<link href="https://fonts.googleapis.com/css2?family=Sunflower:wght@300;500;700&display=swap !important" rel="stylesheet">
@@ -36,7 +39,11 @@
 				</div>
 			</div>
 			
-			<div class = "blankMenu"></div>
+			<div class = "blankMenu">
+				<div>
+			   		<button id="save">저장하기</button>
+				</div>
+			</div>
 			
 			<div class = "navbar_menu_div">
 				<ul class="navbar__menu">
@@ -51,20 +58,20 @@
 		
 		<!-- 보여질 데이터 : summonerName, championSelect, championImg, championName, 
 		               mark123, markname, content, chart and score-->
-		<div class = "championData">
+		<div class = "championData" id = "championData">
 			<div class = "champion__left">
 				<div class = "nameAndSelect">
 					<div class = "summonerName">
 						<h4>${summonerName }</h4> 
 					</div>
 					<div class = "champion_select">
-						<select name="championList">
+						<select name="championList" onchange="window.open(value,'_self');">
 						    <option class = "champion1" selected 
-						    onchange = "if(this.value) location.href=(this.value);" value="../championData?summonerName=${summonerName }&championId=${champion1 }&mostPosition=${mostPosition }"> ${champion1 } </option>
+						    value="../championData?summonerName=${summonerName }&championId=${champion1 }&mostPosition=${mostPosition }"> ${champion1 } </option>
 						    <option class = "champion2" 
-						    onchange = "if(this.value) location.href=(this.value);" value="../championData?summonerName=${summonerName }&championId=${champion2 }&mostPosition=${mostPosition }"> ${champion2 } </option>
+						    value="../championData?summonerName=${summonerName }&championId=${champion2 }&mostPosition=${mostPosition }"> ${champion2 } </option>
 						    <option class = "champion3" 
-						    onchange = "if(this.value) location.href=(this.value);" value="../championData?summonerName=${summonerName }&championId=${champion3 }&mostPosition=${mostPosition }"> ${champion3 } </option>
+						    value="../championData?summonerName=${summonerName }&championId=${champion3 }&mostPosition=${mostPosition }"> ${champion3 } </option>
 						</select>
 					</div>
 				</div> 
@@ -173,4 +180,18 @@
 			</div>
 		</div>
 	</body>
+		<script type="text/javascript">
+			$(function(){
+			   $("#save").click(function() { 
+			        html2canvas($("#championData"), {
+			            onrendered: function(canvas) {
+			                canvas.toBlob(function(blob) {
+			                    saveAs(blob, 'championData.png');
+			                });
+			            }
+			        });
+			    });
+			});
+		</script>
+	
 	</html>

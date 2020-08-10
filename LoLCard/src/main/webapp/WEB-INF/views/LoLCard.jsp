@@ -17,6 +17,9 @@
 	
 	<!-- JS -->
 	<script src = "resources/js/main.js" defer></script>	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdn.rawgit.com/eligrey/FileSaver.js/5ed507ef8aa53d8ecfea96d96bc7214cd2476fd2/FileSaver.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.js"></script>
 	
 	<!-- Font -->
 	<link href="https://fonts.googleapis.com/css2?family=Sunflower:wght@300;500;700&display=swap !important" rel="stylesheet">
@@ -35,7 +38,11 @@
 			</div>
 		</div>
 				
-		<div class = "blankMenu"></div>
+		<div class = "blankMenu">
+			<div>
+			   <button id="save">저장하기</button>
+			</div>
+		</div>
 		
 		<div class = "navbar_menu_div">
 			<ul class="navbar__menu">
@@ -45,10 +52,9 @@
 				<li class="navbar__menu__item" > <a href = "../championData?summonerName=${LoLCard.summonerName }&mostChampion=${LoLCard.mostChampion1 }&mostPosition=${LoLCard.mostPosition }" > 챔피언 </a> <br> 카드 </li>
 			</ul>
 		</div>
-		
 	</nav>
-	
-	<div class = "lolcard">
+			
+	<div class = "lolcard" id = "lolcard">
 		<div class = "lolcard__left">
 			<div class = "profile">
 				<div class = "profile__left">
@@ -115,4 +121,17 @@
 		</div>
 	</div>
 </body>
+	<script type="text/javascript">
+		$(function(){
+		   $("#save").click(function() { 
+		        html2canvas($("#lolcard"), {
+		            onrendered: function(canvas) {
+		                canvas.toBlob(function(blob) {
+		                    saveAs(blob, 'LoLCard.png');
+		                });
+		            }
+		        });
+		    });
+		});
+	</script>
 </html>
